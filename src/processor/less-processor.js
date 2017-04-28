@@ -1,19 +1,45 @@
 const _ = require('lodash')
 
-const tplWidth = '.sprite-width(@sprite)    { width: extract(@sprite, 1);  }'
-const tplHeight = '.sprite-height(@sprite)   { height: extract(@sprite, 2); }'
-const tplPosition = `.sprite-position(@sprite) {
+// @formatter:off
+// language=LESS
+const utils = `
+.sprite-width(@sprite) {
+  width: extract(@sprite, 1);
+}
+
+.sprite-height(@sprite) {
+  height: extract(@sprite, 2);
+}
+
+.sprite-position(@sprite) {
   /* dimension / (layoutDimension - containerDimension) */
-  @x: extract(@sprite, 3) / (extract(@sprite, 5) - extract(@sprite, 1));
-  @y: extract(@sprite, 4) / (extract(@sprite, 6) - extract(@sprite, 2));
   background-position: @x @y;
-}`
-const tplSize = `.sprite-size(@sprite, @size) {
+
+  @imageWidth: extract(@sprite, 1);
+  @imageHeight: extract(@sprite, 2);
+  @imageX: extract(@sprite, 3);
+  @imageY: extract(@sprite, 4);
+  @layoutWidth: extract(@sprite, 5);
+  @layoutHeight: extract(@sprite, 6);
+
+  @x: unit((@imageX / (@layoutWidth - @imageWidth)) * 100, %);
+  @y: unit((@imageY / (@layoutHeight - @imageHeight)) * 100, %);
+}
+
+.sprite-size(@sprite, @size) {
   /* (layoutDimension * (elementDimension / containerDimension)) / elementDimension */
-  @x-size: (extract(@sprite, 5) * (extract(@sprite, 3) / extract(@sprite, 1))) / extract(@sprite, 3);
-  @y-size: (extract(@sprite, 6) * (extract(@sprite, 4) / extract(@sprite, 2))) / extract(@sprite, 4);
   background-size: @x-size @y-size;
-}`
+
+  @imageWidth: extract(@sprite, 1);
+  @imageHeight: extract(@sprite, 2);
+  @layoutWidth: extract(@sprite, 5);
+  @layoutHeight: extract(@sprite, 6);
+
+  @x-size: unit((@layoutWidth * (@size / @imageWidth) / @size) * 100, %);
+  @y-size: unit((@layoutHeight * (@size / @imageHeight) / @size) * 100, %);
+}
+`
+// @formatter:on
 
 module.exports = {
   extension: 'less',
@@ -35,8 +61,8 @@ module.exports = {
     const target = [
       '// @formatter:off',
       ...mappings,
-      '',
-      tplWidth, tplHeight, tplPosition, tplSize
+      '// @formatter:on',
+      utils
     ]
     return target.join('\n').replace(/\t/g, _.repeat(' ', 2))
   }
