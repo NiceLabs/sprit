@@ -12,7 +12,6 @@ const utils = `
 }
 
 .sprite-position(@sprite) {
-  /* dimension / (layoutDimension - containerDimension) */
   background-position: @x @y;
 
   @imageWidth: extract(@sprite, 1);
@@ -22,8 +21,8 @@ const utils = `
   @layoutWidth: extract(@sprite, 5);
   @layoutHeight: extract(@sprite, 6);
 
-  @x: unit((@imageX / (@layoutWidth - @imageWidth)) * 100, %);
-  @y: unit((@imageY / (@layoutHeight - @imageHeight)) * 100, %);
+  @x: unit(round(@imageX / (@layoutWidth - @imageWidth), 5) * 100, %);
+  @y: unit(round(@imageY / (@layoutHeight - @imageHeight), 5) * 100, %);
 }
 
 .sprite-size(@sprite, @size) {
@@ -35,8 +34,8 @@ const utils = `
   @layoutWidth: extract(@sprite, 5);
   @layoutHeight: extract(@sprite, 6);
 
-  @x-size: unit((@layoutWidth * (@size / @imageWidth) / @size) * 100, %);
-  @y-size: unit((@layoutHeight * (@size / @imageHeight) / @size) * 100, %);
+  @x-size: unit(round(@layoutWidth * (@size / @imageWidth) / @size, 5) * 100, %);
+  @y-size: unit(round(@layoutHeight * (@size / @imageHeight) / @size, 5) * 100, %);
 }
 `
 // @formatter:on
