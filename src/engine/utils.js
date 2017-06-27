@@ -2,7 +2,8 @@ const _ = require('lodash')
 
 const mapping = {
   lwip: require.resolve('./lwip-engine'),
-  canvas: require.resolve('./canvas-engine')
+  canvas: require.resolve('./canvas-engine'),
+  png: require.resolve('./png-engine')
 }
 
 function loadEngine (engine) {

@@ -1,6 +1,6 @@
 {
   "name": "sprit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a image sprite generator",
   "main": "src/index.js",
   "bin": {
@@ -18,16 +18,17 @@
     "layout": "^2.2.0",
     "lodash": "^4.17.2",
     "node-require-fallback": "^1.0.0",
+    "pngjs": "^3.2.0",
     "through2": "^2.0.3",
     "vinyl": "^2.0.1",
     "vinyl-fs": "^2.4.4",
-    "yargs": "^7.1.0"
+    "yargs": "8.0.2"
   },
   "devDependencies": {
-    "eslint": "^3.12.2",
+    "eslint": "4.1.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-node": "5.1.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
   }
