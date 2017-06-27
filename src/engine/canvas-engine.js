@@ -12,7 +12,7 @@ const getImage = (tile) => new Promise((resolve) => {
 })
 
 const exportImage = canvas => ({
-  contents: new Buffer(canvas.toBuffer()),
+  contents: Buffer.from(canvas.toBuffer()),
   type: 'png',
   mimeType: 'image/png',
   width: canvas.width,

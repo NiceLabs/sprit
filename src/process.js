@@ -12,7 +12,7 @@ const createProcess = options => function (layout, enc, callback) {
   Promise.try(() => processor.process(layout, options))
     .then(contents => {
       this.push({
-        contents: new Buffer(contents, 'utf-8'),
+        contents: Buffer.from(contents, 'utf-8'),
         extension: getExtensionName(processor.extension, options),
         sprite: layout.sprite
       })

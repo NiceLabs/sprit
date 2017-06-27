@@ -31,5 +31,6 @@
     "eslint-plugin-node": "5.1.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
-  }
+  },
+  "engine": "node >= 8"
 }

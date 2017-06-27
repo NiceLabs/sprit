@@ -23,7 +23,7 @@ const defaults = {
 const setEngine = (options) => {
   let engine = _.get(options, 'renderer.engine')
   if (_.isNil(engine)) {
-    engine = require('./engine/canvas-engine')
+    engine = require('./engine/png-engine')
   } else {
     engine = engineUtils.loadEngine(engine)
   }
