@@ -4,15 +4,12 @@ const lwip = require('node-require-fallback')('lwip', 'pajk-lwip')
 
 if (lwip === null) throw new Error('require install "lwip" or "pajk-lwip".')
 
-const lwipCreate = Promise.promisify(lwip['create'])
-const lwipOpen = Promise.promisify(lwip['open'])
+Promise.promisifyAll(lwip)
 
 const toBuffer = async (canvas, options) => {
-  const toBuffer = Promise.promisify(canvas.toBuffer.bind(canvas))
-
   const type = _.get(options, 'output.format', 'png')
   const mimeType = `image/${type}`
-  const contents = await toBuffer(type, {})
+  const contents = await canvas.toBufferAsync(type, {})
   const width = canvas.width()
   const height = canvas.height()
 
@@ -20,25 +17,29 @@ const toBuffer = async (canvas, options) => {
 }
 
 const handleTile = async (canvas, {x, y, offset, contents, type}) => {
-  const image = await lwipOpen(contents, type)
-  const paste = Promise.promisify(canvas.paste.bind(canvas))
-
-  await paste(x + offset, y + offset, image)
+  await canvas.pasteAsync(
+    x + offset,
+    y + offset,
+    await lwip.openAsync(contents, type)
+  )
 }
 
 module.exports = {
   async create (tiles, options) {
-    const image = await lwipCreate(options.width, options.height, options.bgColor)
-    await Promise.each(tiles, _.partial(handleTile, image))
-    return toBuffer(image, options)
+    const canvas = await lwip.createAsync(options.width, options.height, options.bgColor)
+    Promise.promisifyAll(canvas)
+
+    await Promise.each(tiles, _.partial(handleTile, canvas))
+
+    return toBuffer(canvas, options)
   },
   async scale ({contents, type}, options) {
     const interpolation = _.get(options, 'lwip-interpolation') || 'lanczos'
 
-    const image = await lwipOpen(contents, type)
-    const scale = Promise.promisify(image.scale)
+    const canvas = await lwip.openAsync(contents, type)
+    Promise.promisifyAll(canvas)
 
-    const scaled = await scale(options.scale, interpolation)
+    const scaled = await canvas.scaleAsync(options.scale, interpolation)
     return toBuffer(scaled, options)
   }
 }
