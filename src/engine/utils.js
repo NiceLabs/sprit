@@ -6,10 +6,10 @@ const mapping = {
   png: require.resolve('./png-engine')
 }
 
-function loadEngine (engine) {
+exports.loadEngine = engine => {
   if (_.isString(engine)) {
     engine = mapping[engine.toLowerCase()]
-    if (isEngine(engine)) {
+    if (!_.isUndefined(engine)) {
       return require(engine)
     }
   }
@@ -23,8 +23,4 @@ function isEngine (engine) {
   return _.isObject(engine) &&
     _.isFunction(engine.create) &&
     _.isFunction(engine.scale)
-}
-
-module.exports = {
-  loadEngine
 }
