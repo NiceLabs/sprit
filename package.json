@@ -2,15 +2,16 @@
   "name": "sprit",
   "version": "1.0.4",
   "description": "a image sprite generator",
+  "license": "MIT",
+  "author": "Septs",
   "main": "src/index.js",
   "bin": {
     "sprit-cli": "./bin/sprit-cli.js"
   },
+  "repository": "https://github.com/NiceLabs/sprit",
   "scripts": {
     "lint": "eslint --fix src"
   },
-  "author": "Septs",
-  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.6",
     "color": "^1.0.3",
