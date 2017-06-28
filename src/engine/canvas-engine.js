@@ -1,17 +1,9 @@
 const Promise = require('bluebird')
-const Canvas = require('node-require-fallback')('canvas-prebuilt', 'canvas')
+const Canvas = require('node-require-fallback')('canvas', 'canvas-prebuilt')
 
-if (Canvas === null) {
-  throw new Error('require install "canvas-prebuilt" or "canvas".')
-}
+if (Canvas === null) throw new Error('require install "canvas" or "canvas-prebuilt".')
 
-const getImage = (tile) => new Promise((resolve) => {
-  const img = new Canvas['Image']()
-  img.src = tile.contents
-  resolve(img)
-})
-
-const exportImage = canvas => ({
+const toBuffer = canvas => ({
   contents: Buffer.from(canvas.toBuffer()),
   type: 'png',
   mimeType: 'image/png',
@@ -19,29 +11,32 @@ const exportImage = canvas => ({
   height: canvas.height
 })
 
-const resize = (tile, {width, height}) => {
-  return getImage(tile)
-    .then(img => {
-      const canvas = new Canvas(width, height)
-      canvas.getContext('2d')
-        .drawImage(img, 0, 0, width, height)
-      return canvas
-    })
-    .then(exportImage)
+const getImage = async ({contents}) => {
+  const image = new Canvas.Image()
+  image.src = contents
+  return image
 }
 
 module.exports = {
-  create (tiles, options) {
-    const canvas = new Canvas(options.width, options.height)
+  async create (tiles, {width, height}) {
+    const canvas = new Canvas(width, height)
     const ctx = canvas.getContext('2d')
+    const handleTile = async ({x, y, offset, contents}) => {
+      const image = await getImage({contents})
+      ctx.drawImage(image, x + offset, y + offset)
+    }
 
-    const handleTile = (tile) => getImage(tile, options)
-      .then(img => ctx.drawImage(img, tile.x + tile.offset, tile.y + tile.offset))
+    await Promise.each(tiles, handleTile)
 
-    return Promise.map(tiles, handleTile, {concurrency: 1})
-      .then(() => exportImage(canvas))
+    return toBuffer(canvas)
   },
-  scale (base, options) {
-    return resize(base, options)
+  async scale (base, {width, height}) {
+    const image = await getImage(base)
+
+    const canvas = new Canvas(width, height)
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(image, 0, 0, width, height)
+
+    return toBuffer(canvas)
   }
 }
