@@ -1,12 +1,11 @@
 const _ = require('lodash')
 const vfs = require('vinyl-fs')
-const engineUtils = require('./engine/utils')
 
 const defaults = {
   filename: 'sprite',
   renderer: {
-    engine: null,
-    backgroundColor: 'rgba(255, 255, 255, 0)'
+    engine: require('./engine/png-engine'),
+    backgroundColor: 'rgba(0, 0, 0, 0)'
   },
   layout: {
     margin: 0,
@@ -20,19 +19,8 @@ const defaults = {
   }
 }
 
-const setEngine = (options) => {
-  let engine = _.get(options, 'renderer.engine')
-  if (_.isNil(engine)) {
-    engine = require('./engine/png-engine')
-  } else {
-    engine = engineUtils.loadEngine(engine)
-  }
-  _.set(options, 'renderer.engine', engine)
-}
-
 const src = options => {
   options = _.defaultsDeep(options, defaults)
-  setEngine(options)
   return vfs.src(options.src)
     .pipe(require('./tile')(options))
     .pipe(require('./layout')(options))

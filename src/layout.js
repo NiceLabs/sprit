@@ -6,10 +6,11 @@ const LAYOUT = Symbol('layout')
 const getAlgorithm = name => algorithms[name] || algorithms['binary-tree']
 
 const addTile = options => (tile, enc, callback) => {
+  const layout = _.get(options, 'layout', {})
   if (_.isNil(options[LAYOUT])) {
     options[LAYOUT] = new PackingSmith(
-      getAlgorithm(_.get(options, 'layout.algorithm')),
-      _.get(options, 'layout.options', {sort: true})
+      getAlgorithm(layout.algorithm),
+      _.get(layout, 'options', {sort: true})
     )
   }
   options[LAYOUT].addItem({
