@@ -7,18 +7,15 @@ const getExtensionName = (extension, options) => {
   return ''
 }
 
-const createProcess = options => function (layout, enc, callback) {
+const createProcess = options => async function (layout, enc, callback) {
   const {processor} = options.output
-  Promise.try(() => processor.process(layout, options))
-    .then(contents => {
-      this.push({
-        contents: Buffer.from(contents, 'utf-8'),
-        extension: getExtensionName(processor.extension, options),
-        sprite: layout.sprite
-      })
-      callback()
-    })
-    .catch(error => callback(error, null))
+  const contents = await Promise.try(() => processor.process(layout, options))
+  this.push({
+    contents: Buffer.from(contents, 'utf-8'),
+    extension: getExtensionName(processor.extension, options),
+    sprite: layout.sprite
+  })
+  callback()
 }
 
 module.exports = options => require('through2').obj(createProcess(options))

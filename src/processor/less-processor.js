@@ -26,7 +26,6 @@ const utils = `
 }
 
 .sprite-size(@sprite, @size) {
-  /* (layoutDimension * (elementDimension / containerDimension)) / elementDimension */
   background-size: @x-size @y-size;
 
   @imageWidth: extract(@sprite, 1);

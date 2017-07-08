@@ -4,11 +4,11 @@ const vfs = require('vinyl-fs')
 const defaults = {
   filename: 'sprite',
   renderer: {
-    engine: require('./engine/png-engine'),
-    backgroundColor: 'rgba(0, 0, 0, 0)'
+    engine: require('./engine/jimp-engine'),
+    backgroundColor: [0, 0, 0, 0]
   },
   layout: {
-    margin: 0,
+    margin: 2,
     options: {sort: true},
     algorithm: 'binary-tree'
   },
@@ -23,6 +23,7 @@ const src = options => {
   options = _.defaultsDeep(options, defaults)
   return vfs.src(options.src)
     .pipe(require('./tile')(options))
+    .pipe(require('./resize')(options))
     .pipe(require('./layout')(options))
     .pipe(require('./sprite')(options))
     .pipe(require('./process')(options))

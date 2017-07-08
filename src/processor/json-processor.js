@@ -1,26 +1,15 @@
 const _ = require('lodash')
-const {getRelativeBackgroundPosition} = require('./utils')
 
 module.exports = {
   extension: 'json',
-  process (layout) {
-    const relBgPos = getRelativeBackgroundPosition
+  process ({width, height, items}) {
     const data = {
-      width: layout.width,
-      height: layout.height,
-      items: _.map(layout.items, item => ({
-        name: item.meta.name,
-        width: item.width,
-        height: item.height,
-        absolute: {
-          x: item.x,
-          y: item.y
-        },
-        relative: {
-          x: relBgPos(layout.width, item.width, item.x),
-          y: relBgPos(layout.height, item.height, item.y)
-        }
-      }))
+      width: width,
+      height: height,
+      items: _.map(items, item => _.merge(
+        {name: item.meta.name},
+        _.pick(item, ['x', 'y', 'width', 'height'])
+      ))
     }
     return JSON.stringify(data, null, 2)
   }

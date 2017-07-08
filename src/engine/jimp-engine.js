@@ -1,10 +1,9 @@
-const _ = require('lodash')
 const Promise = require('bluebird')
 const Jimp = require('jimp')
 
 const toBuffer = async canvas => {
   const mimeType = Jimp.MIME_PNG
-  const contents = await canvas.getBufferAsync(mimeType)
+  const contents = await Promise.promisify(canvas.getBuffer.bind(canvas))(mimeType)
   return {
     type: 'png',
     mimeType,
@@ -15,7 +14,7 @@ const toBuffer = async canvas => {
 }
 
 const handleTile = async (canvas, {x, y, offset, contents}) => {
-  await canvas.compositeAsync(
+  await canvas.composite(
     await Jimp.read(contents),
     x + offset,
     y + offset
@@ -25,13 +24,12 @@ const handleTile = async (canvas, {x, y, offset, contents}) => {
 module.exports = {
   async create (tiles, {width, height}) {
     const canvas = new Jimp(width, height)
-    Promise.promisifyAll(canvas)
-    await Promise.each(tiles, _.partial(handleTile, canvas))
+    await Promise.each(tiles, tile => handleTile(canvas, tile))
     return toBuffer(canvas)
   },
-  async scale (base, {scale = 0}) {
-    const image = await Jimp.read(base.contents)
-    const scaled = await image.scale(scale)
+  async scale ({contents}, {scale = 1}) {
+    const canvas = await Jimp.read(contents)
+    const scaled = await canvas.scale(scale)
     return toBuffer(scaled)
   }
 }

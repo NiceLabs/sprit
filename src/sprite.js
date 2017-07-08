@@ -1,10 +1,10 @@
 const _ = require('lodash')
 const Color = require('color')
 
-const renderSprite = (options, layout) => {
+const renderSprite = async (options, layout) => {
   const tiles = _.map(
     layout.items,
-    ({x, y, meta}) => _.assign(
+    ({x, y, meta}) => _.merge(
       {x, y, offset: options.layout.margin},
       _.pick(meta, ['type', 'path', 'height', 'width', 'contents'])
     )
@@ -17,8 +17,9 @@ const renderSprite = (options, layout) => {
   })
 }
 
-const createSprite = (layout, options) => renderSprite(options, layout)
-  .then(response => _.pick(response, ['type', 'contents']))
+const createSprite = async (layout, options) => {
+  return _.pick(await renderSprite(options, layout), ['type', 'contents'])
+}
 
 module.exports = options => require('through2').obj((layout, enc, callback) => {
   createSprite(layout, options)
