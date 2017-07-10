@@ -14,18 +14,31 @@ require('sprit').create({
     './icons/*.png', // include files
     '!./icons/ignore-*.png' // ignore files
   ],
-  renderer: {
-    engine: require('sprit/src/engine/png-engine')
-  },
-  layout: {
-    margin: 2
-  },
   output: {
-    targetPath: './src/sprite',
     processor: require('sprit/src/processor/less-processor')
   }
 })
 
+```
+
+### Programmatic usage with Gulp
+
+```js
+const gulp = require('gulp')
+
+gulp.task('sprite', () => {
+  const options = {
+    src: [
+      './icons/*.png', // include files
+      '!./icons/ignore-*.png' // ignore files
+    ],
+    output: {
+      processor: require('sprit/src/processor/less-processor')
+    }
+  }
+  return require('sprit').src(options)
+    .pipe(gulp.dest('./dist'))
+})
 ```
 
 # Thinks
