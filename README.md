@@ -2,18 +2,20 @@
 
 [![NPM version](https://badge.fury.io/js/sprit.svg)](http://badge.fury.io/js/sprit)
 
-1. Generates sprites and proper style files out of a directory of images.
-2. Supports different image engines
+sprit features:
 
-## Usage
+- Generates sprites and proper style files out of a directory of images.
+- Supports multiple reader engine (jimp, canvas, lwip)
 
-### Install
+# Installation
 
 ```bash
 npm install sprit
 ```
 
-### Programmatic usage
+# Usage
+
+## Programmatic usage
 
 ```js
 require('sprit').create({
@@ -28,7 +30,7 @@ require('sprit').create({
 
 ```
 
-### Programmatic usage with Gulp
+## Programmatic usage with Gulp
 
 ```js
 const gulp = require('gulp')
@@ -51,3 +53,9 @@ gulp.task('sprite', () => {
 # Thank
 
 - https://github.com/sprity/sprity
+
+# LICENSE
+
+The MIT License (MIT)
+
+see [LICENSE](LICENSE)
