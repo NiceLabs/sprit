@@ -1,10 +1,17 @@
 # sprit
 
-> Generates sprites and proper style files out of a directory of images.
+[![NPM version](https://badge.fury.io/js/sprit.svg)](http://badge.fury.io/js/sprit)
 
-> Supports different image engines
+1. Generates sprites and proper style files out of a directory of images.
+2. Supports different image engines
 
 ## Usage
+
+### Install
+
+```bash
+npm install sprit
+```
 
 ### Programmatic usage
 
@@ -41,6 +48,6 @@ gulp.task('sprite', () => {
 })
 ```
 
-# Thinks
+# Thank
 
 - https://github.com/sprity/sprity
