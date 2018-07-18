@@ -10,7 +10,7 @@ class JSONProcessor implements IProcessor {
             width: layout.width,
             height: layout.height,
             items: _.map(layout.items, (item) => _.merge(
-                { name: item.meta.name },
+                { name: item.meta.fileName },
                 _.pick(item, ["x", "y", "width", "height"]),
             )),
         };
