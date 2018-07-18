@@ -4,35 +4,28 @@
   "description": "a image sprite generator",
   "license": "MIT",
   "author": "Septs",
-  "main": "src/index.js",
-  "bin": {
-    "sprit-cli": "./bin/sprit-cli.js"
-  },
+  "main": "./dist/index.js",
   "repository": "https://github.com/NiceLabs/sprit",
   "scripts": {
-    "lint": "eslint --fix src"
+    "lint": "tslint --project . --fix"
   },
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "color": "2.0.0",
     "image-size": "^0.6.0",
-    "image-type": "^3.0.0",
     "jimp": "^0.2.28",
     "layout": "^2.2.0",
-    "lodash": "^4.17.2",
-    "node-require-fallback": "^1.0.0",
+    "lodash": "^4.17.10",
     "through2": "^2.0.3",
     "vinyl": "^2.0.1",
-    "vinyl-fs": "^2.4.4",
-    "yargs": "8.0.2"
+    "vinyl-fs": "^3.0.3"
   },
   "devDependencies": {
-    "eslint": "4.1.1",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-node": "5.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "@types/image-size": "0.0.29",
+    "@types/lodash": "^4.14.112",
+    "@types/node": "^10.5.2",
+    "@types/through2": "^2.0.33",
+    "@types/vinyl-fs": "^2.4.8",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
   },
   "engine": "node >= 8"
 }
