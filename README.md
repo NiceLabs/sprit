@@ -5,7 +5,7 @@
 sprit features:
 
 - Generates sprites and proper style files out of a directory of images.
-- Supports multiple reader engine (jimp, canvas, lwip)
+- Supports multiple reader engine (jimp)
 
 # Installation
 
@@ -17,37 +17,33 @@ npm install sprit
 
 ## Programmatic usage
 
-```js
-require('sprit').create({
-  src: [
-    './icons/*.png', // include files
-    '!./icons/ignore-*.png' // ignore files
-  ],
-  output: {
-    processor: require('sprit/src/processor/less-processor')
-  }
-})
+```typescript
+import sprit from "sprit";
 
+sprit.create({
+    src: [
+        './icons/*.png', // include files
+        '!./icons/ignore-*.png' // ignore files
+    ],
+});
 ```
 
 ## Programmatic usage with Gulp
 
-```js
-const gulp = require('gulp')
+```typescript
+const gulp = require("gulp");
+const sprit = require("sprit");
 
-gulp.task('sprite', () => {
-  const options = {
-    src: [
-      './icons/*.png', // include files
-      '!./icons/ignore-*.png' // ignore files
-    ],
-    output: {
-      processor: require('sprit/src/processor/less-processor')
-    }
-  }
-  return require('sprit').src(options)
-    .pipe(gulp.dest('./dist'))
-})
+gulp.task("sprite", () => {
+    const options = {
+        src: [
+            "./icons/*.png", // include files
+            "!./icons/ignore-*.png" // ignore files
+        ],
+    };
+    return sprit.src(options)
+        .pipe(gulp.dest("./dist"));
+});
 ```
 
 # Thank
