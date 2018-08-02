@@ -5,7 +5,7 @@ import { IEncodedImage, IEngine, IEngineOptions, ITile } from ".";
 
 class JimpEngine implements IEngine {
     public async create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage> {
-        const canvas: Jimp = new (Jimp as any)(options.width, options.height);
+        const canvas = new Jimp(options.width, options.height);
         await Promise.all(_.map(tiles, async (tile) => {
             await canvas.composite(
                 await Jimp.read(tile.contents),
