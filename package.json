@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "image-size": "^0.6.0",
-    "jimp": "^0.3.0",
+    "jimp": "^0.3.2",
     "layout": "^2.2.0",
     "lodash": "^4.17.10",
     "through2": "^2.0.3",
@@ -22,10 +22,10 @@
   },
   "devDependencies": {
     "@types/image-size": "0.0.29",
-    "@types/lodash": "^4.14.115",
-    "@types/node": "^10.5.5",
+    "@types/lodash": "^4.14.116",
+    "@types/node": "^10.5.7",
     "@types/through2": "^2.0.33",
-    "@types/vinyl-fs": "^2.4.8",
+    "@types/vinyl-fs": "^2.4.9",
     "del-cli": "^1.1.0",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1"
