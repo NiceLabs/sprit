@@ -5,7 +5,7 @@
 sprit features:
 
 - Generates sprites and proper style files out of a directory of images.
-- Supports multiple reader engine (jimp)
+- Supports multiple rendering engine (jimp)
 
 # Installation
 
