@@ -23,15 +23,13 @@ class JimpEngine implements IEngine {
     }
 }
 
-const toBuffer = async (canvas: Jimp): Promise<IEncodedImage> => {
-    return {
-        contents: await promisify(canvas.getBuffer.bind(canvas))(Jimp.MIME_PNG),
+const toBuffer = async (canvas: Jimp): Promise<IEncodedImage> => ({
+    contents: await canvas.getBufferAsync(Jimp.MIME_PNG),
 
-        type: "png",
+    type: "png",
 
-        width: canvas.bitmap.width,
-        height: canvas.bitmap.height,
-    };
-};
+    width: canvas.bitmap.width,
+    height: canvas.bitmap.height,
+});
 
 export default new JimpEngine();
