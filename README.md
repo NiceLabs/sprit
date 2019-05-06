@@ -7,50 +7,49 @@ sprit features:
 - Generates sprites and proper style files out of a directory of images.
 - Supports multiple rendering engine (jimp)
 
-# Installation
+## Installation
 
 ```bash
 npm install sprit
 ```
 
-# Usage
+## Usage
 
-## Programmatic usage
+### Programmatic usage
 
 ```typescript
 import sprit from "sprit";
 
 sprit.create({
-    src: [
-        './icons/*.png', // include files
-        '!./icons/ignore-*.png' // ignore files
-    ],
+  src: [
+    "./icons/*.png", // include files
+    "!./icons/ignore-*.png" // ignore files
+  ]
 });
 ```
 
-## Programmatic usage with Gulp
+### Programmatic usage with Gulp
 
 ```typescript
 const gulp = require("gulp");
 const sprit = require("sprit");
 
 gulp.task("sprite", () => {
-    const options = {
-        src: [
-            "./icons/*.png", // include files
-            "!./icons/ignore-*.png" // ignore files
-        ],
-    };
-    return sprit.src(options)
-        .pipe(gulp.dest("./dist"));
+  const options = {
+    src: [
+      "./icons/*.png", // include files
+      "!./icons/ignore-*.png" // ignore files
+    ]
+  };
+  return sprit.src(options).pipe(gulp.dest("./dist"));
 });
 ```
 
-# Thank
+## Thank
 
-- https://github.com/sprity/sprity
+- <https://github.com/sprity/sprity>
 
-# LICENSE
+## LICENSE
 
 The MIT License (MIT)
 

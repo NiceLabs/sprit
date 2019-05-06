@@ -1,33 +1,44 @@
 import _ from "lodash";
-import { IEngine } from "./engine";
-import { IProcessor } from "./processor";
-import { ITile } from "./transforms/tile";
+import { IEngineLoader, IEngineOptions } from "./engine";
+import { IProcessorLoader, IProcessorOptions } from "./processor";
+import { ITile } from "./transform/tile";
+
+export type Loader<T> = () => Promise<T | { default: T }>;
 
 export interface IOptions {
     src?: string | string[];
     filename?: string;
     renderer?: {
-        Engine?(): Promise<IEngine>;
-        Scale?(tile: ITile): number
+        engine?: IEngineLoader;
+        options?: IEngineOptions;
+        scale?: (
+            ((tile: ITile) => number) |
+            { maximum: number; }
+        );
     };
     layout?: {
         padding?: number;
+        margin?: number;
     };
     output?: {
         targetPath?: string;
-        Processor?(): Promise<IProcessor>;
+        processor?: IProcessorLoader;
+        options?: IProcessorOptions;
     };
 }
 
 export const defaultsOptions: IOptions = {
     filename: "sprite",
     renderer: {
-        Engine: async () => (await import("./engine/jimp-engine")).default,
-        Scale: _.constant(1),
+        engine: "jimp",
+        scale: _.constant(1),
     },
-    layout: { padding: 0 },
+    layout: {
+        padding: 0,
+        margin: 0,
+    },
     output: {
-        Processor: async () => (await import("./processor/json-processor")).default,
         targetPath: process.cwd(),
+        processor: "json",
     },
 };

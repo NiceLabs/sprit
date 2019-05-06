@@ -1,6 +1,6 @@
 {
   "name": "sprit",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "a image sprite generator",
   "license": "MIT",
   "author": "Septs",
@@ -12,23 +12,30 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "image-size": "^0.6.0",
-    "jimp": "^0.5.0",
+    "css.escape": "^1.5.1",
+    "image-size": "^0.7.4",
+    "jimp": "^0.6.4",
     "layout": "^2.2.0",
     "lodash": "^4.17.11",
-    "through2": "^2.0.3",
+    "through2": "^3.0.1",
     "vinyl": "^2.0.1",
     "vinyl-fs": "^3.0.3"
   },
+  "peerDependencies": {
+    "canvas": ">=2.4"
+  },
   "devDependencies": {
-    "@types/image-size": "0.0.29",
-    "@types/lodash": "^4.14.116",
-    "@types/node": "^10.10.0",
+    "@types/cssesc": "^3.0.0",
+    "@types/image-size": "^0.7.0",
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^12.0.0",
     "@types/through2": "^2.0.34",
-    "@types/vinyl-fs": "^2.4.9",
+    "@types/vinyl": "^2.0.3",
+    "@types/vinyl-fs": "^2.4.11",
+    "canvas": "^2.4.1",
     "del-cli": "^1.1.0",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.3"
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
   },
   "engine": "node >= 8"
 }

@@ -1,7 +1,6 @@
 import imageSize from "image-size";
-import { Transform } from "stream";
 import File from "vinyl";
-import { through2obj } from "./utils";
+import { through2obj } from "../utils";
 
 export interface ITile {
     fileName: string;
@@ -12,7 +11,7 @@ export interface ITile {
     height: number;
 }
 
-export default (): Transform => through2obj(
+export default () => through2obj(
     async (file: File): Promise<ITile> => {
         const contents = file.contents as Buffer;
         const info = imageSize(contents);

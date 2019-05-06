@@ -1,5 +1,7 @@
 {
   "editor.formatOnSave": true,
-  "tslint.autoFixOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
   "prettier.disableLanguages": ["typescript"]
 }

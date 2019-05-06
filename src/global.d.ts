@@ -59,3 +59,8 @@ declare module "layout" {
         sort?: boolean
     }
 }
+
+declare module "css.escape" {
+    function escape(input: string): string;
+    export = escape;
+}

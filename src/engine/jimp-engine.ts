@@ -1,10 +1,9 @@
 import Jimp from "jimp";
 import _ from "lodash";
-import { promisify } from "util";
-import { IEncodedImage, IEngine, IEngineOptions, ITile } from ".";
+import { IEncodedImage, IEngine } from "../types";
 
-class JimpEngine implements IEngine {
-    public async create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage> {
+const engine: IEngine = {
+    async create(tiles, options) {
         const canvas = new Jimp(options.width, options.height);
         await Promise.all(_.map(tiles, async (tile) => {
             await canvas.composite(
@@ -14,14 +13,13 @@ class JimpEngine implements IEngine {
             );
         }));
         return toBuffer(canvas);
-    }
-
-    public async scale(tile: ITile, ratio: number = 1): Promise<IEncodedImage> {
+    },
+    async scale(tile, ratio) {
         const canvas = await Jimp.read(tile.contents);
         const scaled = await canvas.scale(ratio);
         return toBuffer(scaled);
-    }
-}
+    },
+};
 
 const toBuffer = async (canvas: Jimp): Promise<IEncodedImage> => ({
     contents: await canvas.getBufferAsync(Jimp.MIME_PNG),
@@ -32,4 +30,4 @@ const toBuffer = async (canvas: Jimp): Promise<IEncodedImage> => ({
     height: canvas.bitmap.height,
 });
 
-export default new JimpEngine();
+export default engine;

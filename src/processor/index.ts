@@ -1,6 +1,24 @@
-import { LayoutExported } from "layout";
+import { Loader } from "../options";
+import { IProcessor, ITile } from "../types";
+import { useLoader } from "../utils";
 
-export interface IProcessor {
-    extension(): string;
-    handler(layout: LayoutExported): Promise<string>;
+const preset = {
+    css: () => import("./css-processor"),
+    json: () => import("./json-processor"),
+};
+
+export type IProcessorLoader = Loader<IProcessor> | keyof typeof preset;
+
+export interface IProcessorOptions {
+    prefix?: string;
+    naming?(tile: ITile): string;
+
+    [key: string]: any;
 }
+
+export const getProcessor = async (loader: IProcessorLoader) => {
+    if (typeof loader === "string") {
+        return useLoader(preset[loader]);
+    }
+    return useLoader(loader);
+};

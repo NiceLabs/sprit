@@ -1,10 +1,9 @@
 import path from "path";
-import { Transform } from "stream";
 import File from "vinyl";
-import { IProcessExported } from "./process";
-import { through2obj } from "./utils";
+import { through2obj } from "../utils";
+import { IProcessExported } from "./processor";
 
-export default (filename: string, targetPath: string): Transform => through2obj(
+export default (filename: string, targetPath: string) => through2obj(
     async function (chunk: IProcessExported) {
         this.push(new File({
             base: targetPath,

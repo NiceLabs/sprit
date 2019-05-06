@@ -1,7 +1,7 @@
-import { Transform } from "stream";
 import { IOptions } from "../options";
+import { getProcessor } from "../processor";
+import { through2obj } from "../utils";
 import { ISpriteExported } from "./sprite";
-import { through2obj } from "./utils";
 
 export interface IProcessExported {
     contents: Buffer;
@@ -9,10 +9,10 @@ export interface IProcessExported {
     sprite: ISpriteExported["sprite"];
 }
 
-export default (output: IOptions["output"]): Transform => through2obj(
+export default (output: IOptions["output"]) => through2obj(
     async function (layout: ISpriteExported) {
-        const processor = await output.Processor();
-        const contents = await processor.handler(layout);
+        const processor = await getProcessor(output.processor);
+        const contents = await processor.handler(layout, output.options || {});
         this.push({
             contents: Buffer.from(contents, "utf-8"),
             extension: processor.extension(),
