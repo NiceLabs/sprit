@@ -3,9 +3,7 @@ import { IProcessor } from "../types";
 import { getBackgroundPosition, getBackgroundSize } from "../utils";
 
 const processor: IProcessor = {
-    extension() {
-        return "json";
-    },
+    extension: "json",
     async handler(layout) {
         const data = {
             width: layout.width,

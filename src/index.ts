@@ -17,7 +17,7 @@ export const src = (options: IOptions) => {
         .pipe(layout(options.layout))
         .pipe(sprite(options.renderer, options.layout))
         .pipe(processor(options.output))
-        .pipe(savedFile(options.filename, options.output.targetPath));
+        .pipe(savedFile());
 };
 
 export const create = (options: IOptions) => src(options)

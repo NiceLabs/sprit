@@ -19,6 +19,10 @@ export interface ITile {
     contents: Buffer;
 }
 
+export interface ISpriteExported extends LayoutExported {
+    sprite: Pick<IEncodedImage, "contents" | "type">;
+}
+
 export interface IEncodedImage {
     contents: Buffer;
 
@@ -29,6 +33,19 @@ export interface IEncodedImage {
 }
 
 export interface IProcessor {
-    extension(): string;
-    handler(layout: LayoutExported, options: IProcessorOptions): Promise<string>;
+    extension: string;
+    handler(layout: LayoutExported, options: IProcessorOptions): Promise<string | Buffer>;
+}
+
+export interface IProcessorExported {
+    sprite: {
+        path: string;
+        contents: Buffer;
+        extension: string;
+    };
+    metadata: {
+        path: string;
+        contents: Buffer;
+        extension: string;
+    };
 }

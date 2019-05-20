@@ -7,7 +7,6 @@ export type Loader<T> = () => Promise<T | { default: T }>;
 
 export interface IOptions {
     src?: string | string[];
-    filename?: string;
     renderer?: {
         engine?: IEngineLoader;
         options?: IEngineOptions;
@@ -21,6 +20,7 @@ export interface IOptions {
         margin?: number;
     };
     output?: {
+        fileName?: string;
         targetPath?: string;
         processor?: IProcessorLoader;
         options?: IProcessorOptions;
@@ -28,7 +28,6 @@ export interface IOptions {
 }
 
 export const defaultsOptions: IOptions = {
-    filename: "sprite",
     renderer: {
         engine: "jimp",
         scale: _.constant(1),
@@ -38,6 +37,7 @@ export const defaultsOptions: IOptions = {
         margin: 0,
     },
     output: {
+        fileName: "sprite",
         targetPath: process.cwd(),
         processor: "json",
     },

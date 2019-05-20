@@ -1,22 +1,38 @@
+import _ from "lodash";
+import path from "path";
 import { IOptions } from "../options";
 import { getProcessor } from "../processor";
+import { ISpriteExported } from "../types";
 import { through2obj } from "../utils";
-import { ISpriteExported } from "./sprite";
 
-export interface IProcessExported {
-    contents: Buffer;
-    extension: string;
-    sprite: ISpriteExported["sprite"];
-}
-
-export default (output: IOptions["output"]) => through2obj(
-    async function (layout: ISpriteExported) {
+export default (output: IOptions["output"]) => {
+    const makePath = (ext: string) => path.format({
+        base: output.targetPath,
+        name: output.fileName,
+        ext,
+    });
+    return through2obj(async function (layout: ISpriteExported) {
         const processor = await getProcessor(output.processor);
-        const contents = await processor.handler(layout, output.options || {});
         this.push({
-            contents: Buffer.from(contents, "utf-8"),
-            extension: processor.extension(),
-            sprite: layout.sprite,
+            sprite: makeFile(
+                makePath(layout.sprite.type),
+                layout.sprite.contents,
+                layout.sprite.type,
+            ),
+            metadata: makeFile(
+                makePath(processor.extension),
+                await processor.handler(layout, _.merge(output.options, {
+                    path: `${output.fileName}.${layout.sprite.type}`,
+                })),
+                processor.extension,
+            ),
         });
-    },
-);
+    });
+};
+
+const makeFile = (target: string, contents: string | Buffer, extension: string) => {
+    if (typeof contents === "string") {
+        contents = Buffer.from(contents, "utf-8");
+    }
+    return { path: target, contents, extension };
+};

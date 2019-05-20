@@ -4,9 +4,7 @@ import { IProcessor } from "../types";
 import { getBackgroundPosition, getBackgroundSize } from "../utils";
 
 const processor: IProcessor = {
-    extension() {
-        return "css";
-    },
+    extension: "css",
     async handler(layout, options) {
         const prefix = options.prefix || "icon-";
         const naming = options.naming || _.identity;

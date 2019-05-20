@@ -1,19 +1,16 @@
-import path from "path";
 import File from "vinyl";
+import { IProcessorExported } from "../types";
 import { through2obj } from "../utils";
-import { IProcessExported } from "./processor";
 
-export default (filename: string, targetPath: string) => through2obj(
-    async function (chunk: IProcessExported) {
+export default () => through2obj(
+    async function ({ metadata, sprite }: IProcessorExported) {
         this.push(new File({
-            base: targetPath,
-            path: path.join(targetPath, `${filename}.${chunk.extension}`),
-            contents: chunk.contents,
+            path: metadata.path,
+            contents: metadata.contents,
         }));
         this.push(new File({
-            base: targetPath,
-            path: path.join(targetPath, `${filename}.${chunk.sprite.type}`),
-            contents: chunk.sprite.contents,
+            path: sprite.path,
+            contents: sprite.contents,
         }));
     },
 );

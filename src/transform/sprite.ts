@@ -2,15 +2,11 @@ import { LayoutExported } from "layout";
 import _ from "lodash";
 import { getEngine } from "../engine";
 import { IOptions } from "../options";
-import { IEncodedImage } from "../types";
+import { ISpriteExported } from "../types";
 import { through2obj } from "../utils";
 
-export interface ISpriteExported extends LayoutExported {
-    sprite: Pick<IEncodedImage, "contents" | "type">;
-}
-
 export default (renderer: IOptions["renderer"], layout: IOptions["layout"]) => through2obj(
-    async (exported: LayoutExported) => {
+    async (exported: LayoutExported): Promise<ISpriteExported> => {
         const engine = await getEngine(renderer.engine);
         const tiles = _.map(exported.items, ({ x, y, meta }) => ({
             x,
