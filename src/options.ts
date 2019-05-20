@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { IEngineLoader, IEngineOptions } from "./engine";
 import { IProcessorLoader, IProcessorOptions } from "./processor";
-import { ITile } from "./transform/tile";
+import { ITile } from "./transform/1-tile";
 
 export type Loader<T> = () => Promise<T | { default: T }>;
 

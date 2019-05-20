@@ -2,12 +2,12 @@ import _ from "lodash";
 import vfs from "vinyl-fs";
 import { defaultsOptions, IOptions } from "./options";
 
-import layout from "./transform/layout";
-import processor from "./transform/processor";
-import savedFile from "./transform/saved-file";
-import scale from "./transform/scale";
-import sprite from "./transform/sprite";
-import tile from "./transform/tile";
+import tile from "./transform/1-tile";
+import scale from "./transform/2-scale";
+import layout from "./transform/3-layout";
+import sprite from "./transform/4-sprite";
+import processor from "./transform/5-processor";
+import savedFile from "./transform/6-saved-file";
 
 export const src = (options: IOptions) => {
     options = _.defaultsDeep(options, defaultsOptions);

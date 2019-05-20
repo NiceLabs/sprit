@@ -2,7 +2,7 @@ import _ from "lodash";
 import { getEngine } from "../engine";
 import { IOptions } from "../options";
 import { through2obj } from "../utils";
-import { ITile } from "./tile";
+import { ITile } from "./1-tile";
 
 export default (renderer: IOptions["renderer"]) => through2obj(
     async (tile: ITile): Promise<ITile> => {

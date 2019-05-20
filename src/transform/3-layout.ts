@@ -1,7 +1,7 @@
 import { algorithms, PackingSmith } from "layout";
 import { IOptions } from "../options";
 import { through2obj } from "../utils";
-import { ITile } from "./tile";
+import { ITile } from "./1-tile";
 
 export default (layout: IOptions["layout"]) => {
     const smith = new PackingSmith(algorithms["binary-tree"], { sort: true });
