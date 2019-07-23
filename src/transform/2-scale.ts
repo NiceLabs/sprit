@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { getEngine } from "../engine";
 import { IOptions } from "../options";
-import { through2obj } from "../utils";
 import { ITile } from "./1-tile";
+import { through2obj } from "./utils";
 
 export default (renderer: IOptions["renderer"]) => through2obj(
     async (tile: ITile): Promise<ITile> => {
@@ -16,7 +16,7 @@ export default (renderer: IOptions["renderer"]) => through2obj(
 
 const getScale = (scale: IOptions["renderer"]["scale"], tile: ITile): number => {
     if (typeof scale === "function") {
-        return scale(tile);
+        return Math.max(scale(tile), 1);
     }
     return scale.maximum / Math.max(tile.width, tile.height);
 };

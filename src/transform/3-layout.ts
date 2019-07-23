@@ -1,20 +1,20 @@
-import { algorithms, PackingSmith } from "layout";
 import { IOptions } from "../options";
-import { through2obj } from "../utils";
 import { ITile } from "./1-tile";
+import { GrowingPacker, IBlock } from "./GrowingPacker";
+import { through2obj } from "./utils";
 
 export default (layout: IOptions["layout"]) => {
-    const smith = new PackingSmith(algorithms["binary-tree"], { sort: true });
+    const blocks: IBlock[] = [];
     return through2obj(
         async (tile: ITile) => {
-            smith.addItem({
-                meta: tile,
+            blocks.push({
                 width: tile.width + layout.padding + layout.margin,
                 height: tile.height + layout.padding + layout.margin,
+                tile,
             });
         },
         async function () {
-            this.push(smith.export());
+            this.push(GrowingPacker.smallestPack(blocks));
         },
     );
 };

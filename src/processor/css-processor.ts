@@ -8,7 +8,7 @@ const processor: IProcessor = {
     async handler(layout, options) {
         const prefix = options.prefix || "icon-";
         const naming = options.naming || _.identity;
-        const items = _.map(layout.items, (item) => [
+        const rules = _.map(layout.blocks, (item) => [
             `.${escape(prefix + naming(item.meta.fileName))} {`,
             `\tbackground-position: ${getBackgroundPosition(layout, item)};`,
             `\tbackground-size: ${getBackgroundSize(layout, item)};`,
@@ -16,7 +16,7 @@ const processor: IProcessor = {
             `\theight: ${item.height}px;`,
             "}",
         ]);
-        return items
+        return rules
             .map((item) => item.join("\n"))
             .join("\n\n");
     },

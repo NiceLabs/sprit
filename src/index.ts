@@ -11,7 +11,7 @@ import savedFile from "./transform/6-saved-file";
 
 export const src = (options: IOptions) => {
     options = _.defaultsDeep(options, defaultsOptions);
-    return vfs.src(options.src)
+    return vfs.src(options.src, { cwd: options.context })
         .pipe(tile())
         .pipe(scale(options.renderer))
         .pipe(layout(options.layout))

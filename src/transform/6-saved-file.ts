@@ -1,6 +1,6 @@
 import File from "vinyl";
 import { IProcessorExported } from "../types";
-import { through2obj } from "../utils";
+import { through2obj } from "./utils";
 
 export default () => through2obj(
     async function ({ metadata, sprite }: IProcessorExported) {

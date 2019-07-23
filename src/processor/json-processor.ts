@@ -8,8 +8,8 @@ const processor: IProcessor = {
         const data = {
             width: layout.width,
             height: layout.height,
-            items: _.map(layout.items, (item) => ({
-                name: item.meta.fileName,
+            blocks: _.map(layout.blocks, (item) => ({
+                name: item.tile.fileName,
                 x: item.x,
                 y: item.y,
                 width: item.width,

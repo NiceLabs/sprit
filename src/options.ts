@@ -6,6 +6,7 @@ import { ITile } from "./transform/1-tile";
 export type Loader<T> = () => Promise<T | { default: T }>;
 
 export interface IOptions {
+    context?: string;
     src?: string | string[];
     renderer?: {
         engine?: IEngineLoader;

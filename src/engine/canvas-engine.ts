@@ -7,13 +7,12 @@ const engine: IEngine = {
         const canvas = new Canvas(options.width, options.height);
         const context = canvas.getContext("2d");
         context.imageSmoothingEnabled = Boolean(options.imageSmoothingEnabled);
-        await Promise.all(_.map(tiles, async (tile) => {
-            context.drawImage(
-                await readImage(tile.contents),
-                tile.x + tile.offset,
-                tile.y + tile.offset,
-            );
-        }));
+        for (const tile of tiles) {
+            const source = await readImage(tile.contents);
+            const x = tile.x + tile.offset;
+            const y = tile.y + tile.offset;
+            context.drawImage(source, x, y);
+        }
         return toBuffer(canvas);
     },
     async scale(tile, ratio) {

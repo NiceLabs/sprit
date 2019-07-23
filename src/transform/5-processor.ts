@@ -3,7 +3,7 @@ import path from "path";
 import { IOptions } from "../options";
 import { getProcessor } from "../processor";
 import { ISpriteExported } from "../types";
-import { through2obj } from "../utils";
+import { through2obj } from "./utils";
 
 export default (output: IOptions["output"]) => {
     const makePath = (ext: string) => path.format({

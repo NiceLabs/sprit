@@ -1,6 +1,6 @@
 import imageSize from "image-size";
 import File from "vinyl";
-import { through2obj } from "../utils";
+import { through2obj } from "./utils";
 
 export interface ITile {
     fileName: string;

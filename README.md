@@ -5,7 +5,7 @@
 sprit features:
 
 - Generates sprites and proper style files out of a directory of images.
-- Supports multiple rendering engine (jimp)
+- Supports multiple rendering engine (jimp, canvas)
 
 ## Installation
 
@@ -18,7 +18,7 @@ npm install sprit
 ### Programmatic usage
 
 ```typescript
-import sprit from "sprit";
+import * as sprit from "sprit";
 
 sprit.create({
   src: [

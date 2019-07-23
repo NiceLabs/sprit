@@ -1,29 +1,6 @@
-import { LayoutExported, LayoutItem } from "layout";
 import _ from "lodash";
-import { Transform } from "stream";
-import through2 from "through2";
-import { callbackify } from "util";
 import { Loader } from "./options";
-
-type TransformHandler = (this: Transform, chunk: any, encoding: string) => Promise<any>;
-type FlushCallback = (this: Transform) => Promise<void>;
-
-export const through2obj = (transform?: TransformHandler, flush?: FlushCallback) => through2.obj(
-    function (chunk, encoding, callback) {
-        if (transform === undefined) {
-            callback();
-            return;
-        }
-        callbackify<any, any, string>(transform.bind(this))(chunk, encoding, callback);
-    },
-    function (callback) {
-        if (flush === undefined) {
-            callback();
-            return;
-        }
-        callbackify(flush.bind(this) as FlushCallback)(callback);
-    },
-);
+import { IBlock, IPacked } from "./transform/GrowingPacker";
 
 export const useLoader = async <T>(loader: Loader<T>) => {
     const loaded: any = await loader();
@@ -33,20 +10,20 @@ export const useLoader = async <T>(loader: Loader<T>) => {
     );
 };
 
-export const getBackgroundPosition = (exported: LayoutExported, item: LayoutItem) => {
+export const getBackgroundPosition = (packed: IPacked, block: IBlock) => {
     // see http://www.jingjingke.com/c/28134.html
     const values = [
-        item.x / (exported.width - item.width),
-        item.y / (exported.height - item.height),
+        block.x / (packed.width - block.width),
+        block.y / (packed.height - block.height),
     ];
     return values.map(toPercent).join(" ");
 };
 
-export const getBackgroundSize = (exported: LayoutExported, item: LayoutItem) => {
+export const getBackgroundSize = (packed: IPacked, block: IBlock) => {
     // see http://www.jingjingke.com/c/28134.html
     const values = [
-        exported.width / item.width,
-        exported.height / item.height,
+        packed.width / block.width,
+        packed.height / block.height,
     ];
     return values.map(toPercent).join(" ");
 };
