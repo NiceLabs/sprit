@@ -11,7 +11,7 @@ export default (output: IOptions["output"]) => {
         name: output.fileName,
         ext,
     });
-    return through2obj(async function (layout: ISpriteExported) {
+    return through2obj<ISpriteExported>(async function (layout) {
         const processor = await getProcessor(output.processor);
         this.push({
             sprite: makeFile(

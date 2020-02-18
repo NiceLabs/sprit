@@ -1,4 +1,4 @@
-import imageSize from "image-size";
+import { imageSize } from "image-size";
 import File from "vinyl";
 import { through2obj } from "./utils";
 

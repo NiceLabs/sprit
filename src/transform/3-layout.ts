@@ -5,8 +5,8 @@ import { through2obj } from "./utils";
 
 export default (layout: IOptions["layout"]) => {
     const blocks: IBlock[] = [];
-    return through2obj(
-        async (tile: ITile) => {
+    return through2obj<ITile>(
+        async (tile) => {
             blocks.push({
                 width: tile.width + layout.padding + layout.margin,
                 height: tile.height + layout.padding + layout.margin,

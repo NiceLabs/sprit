@@ -3,22 +3,24 @@ import { Transform } from "stream";
 import through2 from "through2";
 import { callbackify } from "util";
 
-type TransformHandler = (this: Transform, chunk: any, encoding: string) => Promise<any>;
+type TransformHandler<T = any> = (this: Transform, chunk: T, encoding: string) => Promise<any>;
 type FlushCallback = (this: Transform) => Promise<void>;
 
-export const through2obj = (transform?: TransformHandler, flush?: FlushCallback) => through2.obj(
+export const through2obj = <T>(transform?: TransformHandler<T>, flush?: FlushCallback) => through2.obj(
     function (chunk, encoding, callback) {
         if (transform === undefined) {
             callback();
-            return;
+        } else {
+            callbackify<any, any, string>(transform.bind(this))
+                (chunk, encoding, callback);
         }
-        callbackify<any, any, string>(transform.bind(this))(chunk, encoding, callback);
     },
     function (callback) {
         if (flush === undefined) {
             callback();
-            return;
+        } else {
+            callbackify(flush.bind(this))
+                (callback);
         }
-        callbackify(flush.bind(this) as FlushCallback)(callback);
     },
 );

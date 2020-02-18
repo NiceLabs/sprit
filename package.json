@@ -2,39 +2,39 @@
   "name": "sprit",
   "version": "2.2.0",
   "description": "a image sprite generator",
+  "repository": "https://github.com/NiceLabs/sprit",
   "license": "MIT",
   "author": "Septs",
   "main": "./dist/index.js",
-  "repository": "https://github.com/NiceLabs/sprit",
   "scripts": {
+    "build": "rimraf dist && tsc",
     "lint": "tslint --project . --fix",
-    "build": "del dist && tsc",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "css.escape": "^1.5.1",
-    "image-size": "^0.7.4",
-    "jimp": "^0.6.4",
+    "image-size": "^0.8.3",
+    "jimp": "^0.9.3",
     "lodash": "^4.17.15",
     "through2": "^3.0.1",
     "vinyl": "^2.0.1",
     "vinyl-fs": "^3.0.3"
   },
+  "devDependencies": {
+    "@types/image-size": "^0.8.0",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.7.1",
+    "@types/rimraf": "^2.0.3",
+    "@types/through2": "^2.0.34",
+    "@types/vinyl": "^2.0.4",
+    "@types/vinyl-fs": "^2.4.11",
+    "canvas": "^2.6.1",
+    "rimraf": "^3.0.2",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
+  },
   "peerDependencies": {
     "canvas": ">=2.4"
-  },
-  "devDependencies": {
-    "@types/cssesc": "^3.0.0",
-    "@types/image-size": "^0.7.0",
-    "@types/lodash": "^4.14.136",
-    "@types/node": "^12.6.8",
-    "@types/through2": "^2.0.34",
-    "@types/vinyl": "^2.0.3",
-    "@types/vinyl-fs": "^2.4.11",
-    "canvas": "^2.5.0",
-    "del-cli": "^2.0.0",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3"
   },
   "engine": "node >= 8"
 }

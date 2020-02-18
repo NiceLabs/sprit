@@ -5,8 +5,8 @@ import { ISpriteExported } from "../types";
 import { IPacked } from "./GrowingPacker";
 import { through2obj } from "./utils";
 
-export default (renderer: IOptions["renderer"], layout: IOptions["layout"]) => through2obj(
-    async (packed: IPacked): Promise<ISpriteExported> => {
+export default (renderer: IOptions["renderer"], layout: IOptions["layout"]) => through2obj<IPacked>(
+    async (packed): Promise<ISpriteExported> => {
         const engine = await getEngine(renderer.engine);
         const tiles = _.map(packed.blocks, (block) => ({
             x: block.x,
