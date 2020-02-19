@@ -11,18 +11,16 @@ export interface ITile {
     height: number;
 }
 
-export default () => through2obj<File, ITile>(
-    async (file) => {
-        const contents = file.contents as Buffer;
-        const info = imageSize(contents);
-        return {
-            fileName: file.relative,
-            fileType: info.type,
+export default () => through2obj<File, ITile>(async (file) => {
+    const contents = file.contents as Buffer;
+    const info = imageSize(contents);
+    return {
+        fileName: file.relative,
+        fileType: info.type,
 
-            contents,
+        contents,
 
-            width: info.width,
-            height: info.height,
-        };
-    },
-);
+        width: info.width,
+        height: info.height,
+    };
+});
