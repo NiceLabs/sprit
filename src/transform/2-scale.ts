@@ -4,8 +4,8 @@ import { IOptions } from "../options";
 import { ITile } from "./1-tile";
 import { through2obj } from "./utils";
 
-export default (renderer: IOptions["renderer"]) => through2obj<ITile>(
-    async (tile): Promise<ITile> => {
+export default (renderer: IOptions["renderer"]) => through2obj<ITile, ITile>(
+    async (tile) => {
         const ratio = getScale(renderer.scale, tile);
         if (ratio === 1) { return tile; }
         const engine = await getEngine(renderer.engine);

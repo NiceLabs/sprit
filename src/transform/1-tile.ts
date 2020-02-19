@@ -11,8 +11,8 @@ export interface ITile {
     height: number;
 }
 
-export default () => through2obj(
-    async (file: File): Promise<ITile> => {
+export default () => through2obj<File, ITile>(
+    async (file) => {
         const contents = file.contents as Buffer;
         const info = imageSize(contents);
         return {

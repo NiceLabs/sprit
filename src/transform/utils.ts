@@ -3,10 +3,10 @@ import { Transform } from "stream";
 import through2 from "through2";
 import { callbackify } from "util";
 
-type TransformHandler<T = any> = (this: Transform, chunk: T, encoding: string) => Promise<any>;
+type TransformHandler<T, R> = (this: Transform, chunk: T, encoding: string) => Promise<R>;
 type FlushCallback = (this: Transform) => Promise<void>;
 
-export const through2obj = <T>(transform?: TransformHandler<T>, flush?: FlushCallback) => through2.obj(
+export const through2obj = <T = any, R = any>(transform?: TransformHandler<T, R>, flush?: FlushCallback) => through2.obj(
     function (chunk, encoding, callback) {
         if (transform === undefined) {
             callback();
