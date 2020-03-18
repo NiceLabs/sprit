@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { Loader } from "./options";
-import { IBlock, IPacked } from "./transform/GrowingPacker";
+import { Item, Packed } from "bin-pack";
+import { ITile } from "./types";
 
 export const useLoader = async <T>(loader: Loader<T>) => {
     const loaded: any = await loader();
@@ -10,16 +11,16 @@ export const useLoader = async <T>(loader: Loader<T>) => {
     );
 };
 
-export const getBackgroundPosition = (packed: IPacked, block: IBlock) => {
+export const getBackgroundPosition = (packed: Packed<ITile>, block: Item<ITile>) => {
     // see http://www.jingjingke.com/c/28134.html
     const values = [
-        block.x / (packed.width - block.width),
-        block.y / (packed.height - block.height),
+        (block.x / (packed.width - block.width)) || 0,
+        (block.y / (packed.height - block.height)) || 0,
     ];
     return values.map(toPercent).join(" ");
 };
 
-export const getBackgroundSize = (packed: IPacked, block: IBlock) => {
+export const getBackgroundSize = (packed: Packed<ITile>, block: Item<ITile>) => {
     // see http://www.jingjingke.com/c/28134.html
     const values = [
         packed.width / block.width,

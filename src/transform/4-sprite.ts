@@ -1,19 +1,19 @@
 import _ from "lodash";
 import { getEngine } from "../engine";
 import { IOptions } from "../options";
-import { ISpriteExported } from "../types";
-import { IPacked } from "./GrowingPacker";
+import { ISpriteExported, ITile } from "../types";
+import { Packed } from "bin-pack";
 import { through2obj } from "./utils";
 
-export default (renderer: IOptions["renderer"], layout: IOptions["layout"]) => through2obj<IPacked, ISpriteExported>(async (packed) => {
+export default (renderer: IOptions["renderer"], layout: IOptions["layout"]) => through2obj<Packed<ITile>, ISpriteExported>(async (packed) => {
     const engine = await getEngine(renderer.engine);
-    const tiles = _.map(packed.blocks, (block) => ({
+    const tiles = _.map(packed.items, (block) => ({
         x: block.x,
         y: block.y,
         offset: layout.padding,
-        width: block.tile.width,
-        height: block.tile.height,
-        contents: block.tile.contents,
+        width: block.meta.width,
+        height: block.meta.height,
+        contents: block.meta.contents,
     }));
     const sprite = await engine.create(tiles, _.merge(renderer.options || {}, {
         width: packed.width,

@@ -1,6 +1,6 @@
 import { IEngineOptions } from "./engine";
 import { IProcessorOptions } from "./processor";
-import { IPacked } from "./transform/GrowingPacker";
+import { Packed } from "bin-pack";
 
 export interface IEngine {
     create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage>;
@@ -16,9 +16,11 @@ export interface ITile {
     width: number;
     height: number;
     contents: Buffer;
+
+    [name: string]: any;
 }
 
-export interface ISpriteExported extends IPacked {
+export interface ISpriteExported extends Packed<ITile> {
     sprite: Pick<IEncodedImage, "contents" | "type">;
 }
 
@@ -32,7 +34,7 @@ export interface IEncodedImage {
 
 export interface IProcessor {
     extension: string;
-    handler(layout: IPacked, options: IProcessorOptions): Promise<string | Buffer>;
+    handler(layout: Packed<ITile>, options: IProcessorOptions): Promise<string | Buffer>;
 }
 
 export interface IProcessorExported {

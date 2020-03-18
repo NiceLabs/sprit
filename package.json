@@ -12,9 +12,10 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "bin-pack": "^1.0.2",
     "css.escape": "^1.5.1",
     "image-size": "^0.8.3",
-    "jimp": "^0.9.3",
+    "jimp": "^0.9.5",
     "lodash": "^4.17.15",
     "through2": "^3.0.1",
     "vinyl": "^2.0.1",
@@ -23,7 +24,7 @@
   "devDependencies": {
     "@types/image-size": "^0.8.0",
     "@types/lodash": "^4.14.149",
-    "@types/node": "^13.7.1",
+    "@types/node": "^13.9.1",
     "@types/rimraf": "^2.0.3",
     "@types/through2": "^2.0.34",
     "@types/vinyl": "^2.0.4",
@@ -31,7 +32,7 @@
     "canvas": "^2.6.1",
     "rimraf": "^3.0.2",
     "tslint": "^6.0.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "canvas": ">=2.4"

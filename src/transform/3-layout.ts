@@ -1,20 +1,25 @@
 import { IOptions } from "../options";
 import { ITile } from "./1-tile";
-import { GrowingPacker, IBlock } from "./GrowingPacker";
+import pack from "bin-pack";
 import { through2obj } from "./utils";
 
 export default (layout: IOptions["layout"]) => {
-    const blocks: IBlock[] = [];
+    const items: pack.Item<ITile>[] = [];
     return through2obj<ITile>(
         async (tile) => {
-            blocks.push({
+            items.push({
                 width: tile.width + layout.padding + layout.margin,
                 height: tile.height + layout.padding + layout.margin,
-                tile,
+                meta: tile,
             });
         },
         async function () {
-            this.push(GrowingPacker.smallestPack(blocks));
+            const { width, height } = pack(items, { inPlace: true });
+            this.push({
+                width,
+                height,
+                items
+            });
         },
     );
 };
