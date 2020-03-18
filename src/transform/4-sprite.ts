@@ -7,13 +7,14 @@ import { through2obj } from "./utils";
 
 export default (renderer: IOptions["renderer"], layout: IOptions["layout"]) => through2obj<Packed<ITile>, ISpriteExported>(async (packed) => {
     const engine = await getEngine(renderer.engine);
-    const tiles = _.map(packed.items, (block) => ({
-        x: block.x,
-        y: block.y,
+    const tiles = _.map(packed.items, ({ x, y, meta }): ITile => ({
+        x, y,
         offset: layout.padding,
-        width: block.meta.width,
-        height: block.meta.height,
-        contents: block.meta.contents,
+        width: meta.width,
+        height: meta.height,
+        contents: meta.contents,
+        fileName: meta.fileName,
+        fileType: meta.fileType,
     }));
     const sprite = await engine.create(tiles, _.merge(renderer.options || {}, {
         width: packed.width,
