@@ -2,10 +2,7 @@
 
 /node_modules
 
-/sample
 /dist
-/tests*
-/sprite.*
 
 sprit-*.tgz
-sprit.*
+sprite.*

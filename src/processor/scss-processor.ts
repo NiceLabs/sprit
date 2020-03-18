@@ -4,9 +4,9 @@ import { IProcessor } from "../types";
 import { getBackgroundPosition, getBackgroundSize } from "../utils";
 
 const processor: IProcessor = {
-    extension: "css",
+    extension: "scss",
     async handler(layout, options) {
-        const prefix = options.prefix ?? ".sprite-";
+        const prefix = options.prefix ?? "sprite-";
         const naming = options.naming;
         const omitFields = _.map(_.castArray(options.omitFields), String);
         const rules = generator.create();
@@ -18,7 +18,7 @@ const processor: IProcessor = {
                 "height": `${block.height}px`,
             };
             rules.addRule(
-                prefix + naming(block.item),
+                `@mixin ${prefix}${naming(block.item)}`,
                 _.omit(fields, omitFields),
             );
         });

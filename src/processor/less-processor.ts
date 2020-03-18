@@ -4,7 +4,7 @@ import { IProcessor } from "../types";
 import { getBackgroundPosition, getBackgroundSize } from "../utils";
 
 const processor: IProcessor = {
-    extension: "css",
+    extension: "less",
     async handler(layout, options) {
         const prefix = options.prefix ?? ".sprite-";
         const naming = options.naming;
@@ -18,7 +18,7 @@ const processor: IProcessor = {
                 "height": `${block.height}px`,
             };
             rules.addRule(
-                prefix + naming(block.item),
+                `${prefix}${naming(block.item)}()`,
                 _.omit(fields, omitFields),
             );
         });

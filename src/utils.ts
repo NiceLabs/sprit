@@ -1,17 +1,17 @@
+import type { PackedItem, PackResult } from "bin-pack";
 import _ from "lodash";
 import { Loader } from "./options";
-import { Item, Packed } from "bin-pack";
 import { ITile } from "./types";
 
 export const useLoader = async <T>(loader: Loader<T>) => {
     const loaded: any = await loader();
     return (
-        loaded.default as T ||
+        loaded.default as T ??
         loaded as T
     );
 };
 
-export const getBackgroundPosition = (packed: Packed<ITile>, block: Item<ITile>) => {
+export const getBackgroundPosition = (packed: PackResult<ITile>, block: PackedItem<ITile>) => {
     // see http://www.jingjingke.com/c/28134.html
     const values = [
         (block.x / (packed.width - block.width)) || 0,
@@ -20,7 +20,7 @@ export const getBackgroundPosition = (packed: Packed<ITile>, block: Item<ITile>)
     return values.map(toPercent).join(" ");
 };
 
-export const getBackgroundSize = (packed: Packed<ITile>, block: Item<ITile>) => {
+export const getBackgroundSize = (packed: PackResult<ITile>, block: PackedItem<ITile>) => {
     // see http://www.jingjingke.com/c/28134.html
     const values = [
         packed.width / block.width,

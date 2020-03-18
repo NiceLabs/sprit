@@ -1,24 +1,29 @@
+import pack from "bin-pack";
+import type { Bin } from "bin-pack";
 import { IOptions } from "../options";
 import { ITile } from "./1-tile";
-import pack from "bin-pack";
 import { through2obj } from "./utils";
 
+export interface IBlock extends Bin {
+    item: ITile;
+}
+
 export default (layout: IOptions["layout"]) => {
-    const items: pack.Item<ITile>[] = [];
+    const items: IBlock[] = [];
     return through2obj<ITile>(
         async (tile) => {
             items.push({
                 width: tile.width + layout.padding + layout.margin,
                 height: tile.height + layout.padding + layout.margin,
-                meta: tile,
+                item: tile,
             });
         },
         async function () {
-            const { width, height } = pack(items, { inPlace: true });
+            const blocks = pack(items, { inPlace: true });
             this.push({
-                width,
-                height,
-                items
+                width: blocks.width,
+                height: blocks.height,
+                items,
             });
         },
     );

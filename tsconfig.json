@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "typeRoots": ["node_modules/@types", "typings"],
+    "target": "es2019",
     "module": "commonjs",
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
@@ -9,7 +10,5 @@
     "declaration": true,
     "sourceMap": true
   },
-  "files": ["./src/global.d.ts"],
-  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

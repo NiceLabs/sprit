@@ -1,13 +1,13 @@
 import _ from "lodash";
 import path from "path";
+import File from "vinyl";
 import { IOptions } from "../options";
 import { getProcessor } from "../processor";
 import { ISpriteExported } from "../types";
 import { through2obj } from "./utils";
-import File from "vinyl"
 
-export default (output: IOptions["output"]) => {
-    const makePath = (ext: string) => path.join(output.targetPath, path.format({
+export default (context: string, output: IOptions["output"]) => {
+    const makePath = (ext: string) => path.join(context, path.format({
         name: output.fileName,
         ext: `.${ext}`,
     }));
@@ -17,7 +17,7 @@ export default (output: IOptions["output"]) => {
             makePath(layout.sprite.type),
             layout.sprite.contents,
             layout.sprite.type,
-        ))
+        ));
         this.push(makeFile(
             makePath(processor.extension),
             await processor.handler(layout, _.merge(output.options, {

@@ -4,6 +4,8 @@ import { useLoader } from "../utils";
 
 const preset = {
     css: () => import("./css-processor"),
+    scss: () => import("./scss-processor"),
+    less: () => import("./less-processor"),
     json: () => import("./json-processor"),
 };
 
@@ -11,9 +13,10 @@ export type IProcessorLoader = Loader<IProcessor> | keyof typeof preset;
 
 export interface IProcessorOptions {
     prefix?: string;
+    omitFields?: string | string[];
     naming?(tile: ITile): string;
 
-    [key: string]: any;
+    [name: string]: any;
 }
 
 export const getProcessor = async (loader: IProcessorLoader) => {

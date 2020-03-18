@@ -1,6 +1,6 @@
+import type { PackResult } from "bin-pack";
 import { IEngineOptions } from "./engine";
 import { IProcessorOptions } from "./processor";
-import { Packed } from "bin-pack";
 
 export interface IEngine {
     create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage>;
@@ -23,7 +23,7 @@ export interface ITile {
     [name: string]: any;
 }
 
-export interface ISpriteExported extends Packed<ITile> {
+export interface ISpriteExported extends PackResult<ITile> {
     sprite: Pick<IEncodedImage, "contents" | "type">;
 }
 
@@ -37,7 +37,7 @@ export interface IEncodedImage {
 
 export interface IProcessor {
     extension: string;
-    handler(layout: Packed<ITile>, options: IProcessorOptions): Promise<string | Buffer>;
+    handler(layout: PackResult<ITile>, options: IProcessorOptions): Promise<string | Buffer>;
 }
 
 export interface IProcessorExported {

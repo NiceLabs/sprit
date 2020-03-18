@@ -1,8 +1,8 @@
 import _ from "lodash";
+import { basename, extname } from "path";
 import { IEngineLoader, IEngineOptions } from "./engine";
 import { IProcessorLoader, IProcessorOptions } from "./processor";
 import { ITile } from "./transform/1-tile";
-import { basename, extname } from "path";
 
 export type Loader<T> = () => Promise<T | { default: T }>;
 
@@ -23,13 +23,13 @@ export interface IOptions {
     };
     output?: {
         fileName?: string;
-        targetPath?: string;
         processor?: IProcessorLoader;
         options?: IProcessorOptions;
     };
 }
 
 export const defaultOptions: IOptions = {
+    context: process.cwd(),
     renderer: {
         engine: "jimp",
         scale: _.constant(1),
@@ -41,11 +41,10 @@ export const defaultOptions: IOptions = {
     output: {
         processor: "json",
         fileName: "sprite",
-        targetPath: process.cwd(),
         options: {
             naming({ fileName }) {
-                return basename(fileName, extname(fileName))
-            }
-        }
+                return basename(fileName, extname(fileName));
+            },
+        },
     },
 };
