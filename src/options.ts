@@ -2,6 +2,7 @@ import _ from "lodash";
 import { IEngineLoader, IEngineOptions } from "./engine";
 import { IProcessorLoader, IProcessorOptions } from "./processor";
 import { ITile } from "./transform/1-tile";
+import { basename, extname } from "path";
 
 export type Loader<T> = () => Promise<T | { default: T }>;
 
@@ -28,7 +29,7 @@ export interface IOptions {
     };
 }
 
-export const defaultsOptions: IOptions = {
+export const defaultOptions: IOptions = {
     renderer: {
         engine: "jimp",
         scale: _.constant(1),
@@ -38,8 +39,13 @@ export const defaultsOptions: IOptions = {
         margin: 0,
     },
     output: {
+        processor: "json",
         fileName: "sprite",
         targetPath: process.cwd(),
-        processor: "json",
+        options: {
+            naming({ fileName }) {
+                return basename(fileName, extname(fileName))
+            }
+        }
     },
 };

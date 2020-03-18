@@ -17,6 +17,9 @@ export interface ITile {
     height: number;
     contents: Buffer;
 
+    fileName: string;
+    fileType: string;
+
     [name: string]: any;
 }
 

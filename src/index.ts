@@ -1,6 +1,6 @@
 import _ from "lodash";
 import vfs from "vinyl-fs";
-import { defaultsOptions, IOptions } from "./options";
+import { defaultOptions, IOptions } from "./options";
 
 import tile from "./transform/1-tile";
 import scale from "./transform/2-scale";
@@ -9,7 +9,7 @@ import sprite from "./transform/4-sprite";
 import processor from "./transform/5-processor";
 
 export const src = (options: IOptions) => {
-    options = _.defaultsDeep(options, defaultsOptions);
+    options = _.defaultsDeep(options, defaultOptions);
     return vfs.src(options.src, { cwd: options.context })
         .pipe(tile())
         .pipe(scale(options.renderer))
