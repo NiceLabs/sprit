@@ -6,4 +6,3 @@ declare module "css-generator" {
 
     export function create(): Generator;
 }
-
