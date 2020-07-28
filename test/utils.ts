@@ -8,6 +8,9 @@ import path from "path";
 export const SAMPLE_GLOB = path.join(__dirname, "sample", "*.png");
 
 export function mkdtemp() {
+    if (process.env.CI) {
+        return fs.mkdtempSync(process.env.HOME);
+    }
     const target = fs.realpathSync(os.tmpdir());
     return fs.mkdtempSync(target);
 }
