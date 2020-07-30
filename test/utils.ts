@@ -8,7 +8,9 @@ import path from 'path';
 export const SAMPLE_GLOB = path.join(__dirname, 'sample', '*.png');
 
 export async function mkdtemp(): Promise<string> {
-  const target = process.env.CI ? os.tmpdir() : await fs.realpath(os.tmpdir());
+  const target = process.env.CI
+    ? path.join(process.env.HOME, os.tmpdir())
+    : await fs.realpath(os.tmpdir());
   return fs.mkdtemp(target);
 }
 
