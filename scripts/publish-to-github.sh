@@ -1,7 +1,7 @@
 #!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
 set -x
-
-npm config list
 
 jq '.name = "@nicelabs/sprit"' package.json > package-modified.json
 mv package-modified.json package.json
