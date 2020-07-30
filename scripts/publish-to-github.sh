@@ -1,4 +1,8 @@
 #!/bin/bash
+set -x
+
+npm config list
+
 jq '.name = "@nicelabs/sprit"' package.json > package-modified.json
 mv package-modified.json package.json
 
