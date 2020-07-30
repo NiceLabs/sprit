@@ -1,54 +1,57 @@
-import type { PackResult } from "bin-pack";
-import { IEngineOptions } from "./engine";
-import { IProcessorOptions } from "./processor";
+import type { PackResult } from 'bin-pack';
+import { IEngineOptions } from './engine';
+import { IProcessorOptions } from './processor';
 
 export interface IEngine {
-    create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage>;
-    scale(tile: ITile, ratio: number): Promise<IEncodedImage>;
+  create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage>;
+  scale(tile: ITile, ratio: number): Promise<IEncodedImage>;
 }
 
 export interface ITile {
-    x?: number;
-    y?: number;
-    offset?: number;
-    scale?: number;
+  x?: number;
+  y?: number;
+  offset?: number;
+  scale?: number;
 
-    width: number;
-    height: number;
-    contents: Buffer;
+  width: number;
+  height: number;
+  contents: Buffer;
 
-    fileName: string;
-    fileType: string;
+  fileName: string;
+  fileType: string;
 
-    [name: string]: any;
+  [name: string]: any;
 }
 
 export interface ISpriteExported extends PackResult<ITile> {
-    sprite: Pick<IEncodedImage, "contents" | "type">;
+  sprite: Pick<IEncodedImage, 'contents' | 'type'>;
 }
 
 export interface IEncodedImage {
-    type: string;
+  type: string;
 
-    width: number;
-    height: number;
-    contents: Buffer;
+  width: number;
+  height: number;
+  contents: Buffer;
 }
 
 export interface IProcessor {
-    extension: string;
-    handler(layout: PackResult<ITile>, options: IProcessorOptions): Promise<string | Buffer>;
+  extension: string;
+  handler(
+    layout: PackResult<ITile>,
+    options: IProcessorOptions,
+  ): Promise<string | Buffer>;
 }
 
 export interface IProcessorExported {
-    sprite: {
-        path: string;
-        contents: Buffer;
-        extension: string;
-    };
-    metadata: {
-        path: string;
-        contents: Buffer;
-        extension: string;
-    };
+  sprite: {
+    path: string;
+    contents: Buffer;
+    extension: string;
+  };
+  metadata: {
+    path: string;
+    contents: Buffer;
+    extension: string;
+  };
 }

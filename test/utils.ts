@@ -1,26 +1,28 @@
-import { assert } from "chai";
-import {  hashElement } from "folder-hash";
-import fs from "fs";
-import _ from "lodash";
-import os from "os";
-import path from "path";
+import { assert } from 'chai';
+import { hashElement } from 'folder-hash';
+import { promises as fs } from 'fs';
+import _ from 'lodash';
+import os from 'os';
+import path from 'path';
 
-export const SAMPLE_GLOB = path.join(__dirname, "sample", "*.png");
+export const SAMPLE_GLOB = path.join(__dirname, 'sample', '*.png');
 
-export function mkdtemp() {
-    if (process.env.CI) {
-        return fs.mkdtempSync(process.env.HOME);
-    }
-    const target = fs.realpathSync(os.tmpdir());
-    return fs.mkdtempSync(target);
+export async function mkdtemp(): Promise<string> {
+  const target = process.env.CI ? os.tmpdir() : await fs.realpath(os.tmpdir());
+  return fs.mkdtemp(target);
 }
 
-export function test(context: string, done: () => void, expected: string[], stream: NodeJS.ReadWriteStream) {
-    stream.on("end", async () => {
-        const hashed = await hashElement(context, {
-            files: { exclude: ["sprite.png"] },
-        });
-        assert.deepEqual(_.map(hashed.children, "hash"), expected);
-        done();
+export function test(
+  context: string,
+  done: () => void,
+  expected: string[],
+  stream: NodeJS.ReadWriteStream,
+): void {
+  stream.on('end', async () => {
+    const hashed = await hashElement(context, {
+      files: { exclude: ['sprite.png'] },
     });
+    assert.deepEqual(_.map(hashed.children, 'hash'), expected);
+    done();
+  });
 }
