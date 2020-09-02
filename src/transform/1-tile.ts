@@ -1,16 +1,8 @@
 import { imageSize } from 'image-size';
 import { Transform } from 'stream';
 import File from 'vinyl';
+import { ITile } from '../types';
 import { through2obj } from './utils';
-
-export interface ITile {
-  fileName: string;
-  fileType: string;
-  contents: Buffer;
-
-  width: number;
-  height: number;
-}
 
 export default (): Transform =>
   through2obj<File, ITile>(async (file) => {

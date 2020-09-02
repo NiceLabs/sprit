@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { basename, extname } from 'path';
 import { IEngineLoader, IEngineOptions } from './engine';
 import { IProcessorLoader, IProcessorOptions } from './processor';
-import { ITile } from './transform/1-tile';
+import { ITile } from './types';
 
 export type Loader<T> = () => Promise<T | { default: T }>;
 

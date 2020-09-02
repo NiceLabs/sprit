@@ -2,8 +2,8 @@ import pack from 'bin-pack';
 import type { Bin } from 'bin-pack';
 import { Transform } from 'stream';
 import { IOptions } from '../options';
-import { ITile } from './1-tile';
 import { through2obj } from './utils';
+import { ITile } from '../types';
 
 export interface IBlock extends Bin {
   item: ITile;

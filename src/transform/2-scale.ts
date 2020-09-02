@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { Transform } from 'stream';
 import { getEngine } from '../engine';
 import { IOptions } from '../options';
-import { ITile } from './1-tile';
+import { ITile } from '../types';
 import { through2obj } from './utils';
 
 export default (renderer: IOptions['renderer']): Transform =>
