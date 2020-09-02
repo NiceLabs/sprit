@@ -12,7 +12,7 @@ const engine: IEngine = {
       const y = tile.y + tile.offset;
       context.drawImage(source, x, y);
     }
-    return toBuffer(canvas);
+    return toBuffer(canvas, options.format);
   },
   async scale(tile, ratio) {
     const image = await readImage(tile.contents);
@@ -31,17 +31,34 @@ const readImage = (contents: Image['src']) =>
   new Promise<Image>((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onerror = () => reject();
     img.src = contents;
   });
 
-const toBuffer = async (canvas: Canvas): Promise<IEncodedImage> => ({
-  contents: canvas.toBuffer(),
+const toBuffer = async (
+  canvas: Canvas,
+  format = 'png',
+): Promise<IEncodedImage> => {
+  let contents: Buffer;
+  if (format === 'png') {
+    contents = canvas.toBuffer('image/png', {
+      compressionLevel: 9,
+      filters: canvas.PNG_FILTER_PAETH,
+    });
+  } else {
+    contents = canvas.toBuffer('image/jpeg', {
+      quality: 0.9,
+      progressive: true,
+    });
+  }
+  return {
+    contents,
 
-  type: 'png',
+    format,
 
-  width: canvas.width,
-  height: canvas.height,
-});
+    width: canvas.width,
+    height: canvas.height,
+  };
+};
 
 export default engine;

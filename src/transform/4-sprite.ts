@@ -1,16 +1,15 @@
-import type { PackResult } from 'bin-pack';
 import _ from 'lodash';
+import { Transform } from 'stream';
 import { getEngine } from '../engine';
 import { IOptions } from '../options';
 import { ISpriteExported, ITile } from '../types';
 import { through2obj } from './utils';
-import { Transform } from 'stream';
 
 export default (
   renderer: IOptions['renderer'],
   layout: IOptions['layout'],
 ): Transform =>
-  through2obj<PackResult<ITile>, ISpriteExported>(async (packed) => {
+  through2obj<ISpriteExported, ISpriteExported>(async (packed) => {
     const engine = await getEngine(renderer.engine);
     const tiles = _.map(
       packed.items,
@@ -27,10 +26,12 @@ export default (
     );
     const sprite = await engine.create(
       tiles,
-      _.merge(renderer.options || {}, {
+      _.defaults(renderer.options, {
         width: packed.width,
         height: packed.height,
+        format: 'png',
       }),
     );
-    return _.merge({ sprite: _.pick(sprite, ['type', 'contents']) }, packed);
+    packed.sprite = _.pick(sprite, ['contents', 'format']);
+    return packed;
   });

@@ -24,11 +24,11 @@ export interface ITile {
 }
 
 export interface ISpriteExported extends PackResult<ITile> {
-  sprite: Pick<IEncodedImage, 'contents' | 'type'>;
+  sprite: Pick<IEncodedImage, 'contents' | 'format'>;
 }
 
 export interface IEncodedImage {
-  type: string;
+  format: string;
 
   width: number;
   height: number;

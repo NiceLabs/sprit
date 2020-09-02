@@ -13,6 +13,8 @@ export interface IEngineOptions {
   width: number;
   height: number;
 
+  format: 'png' | 'jpg';
+
   [key: string]: any;
 }
 

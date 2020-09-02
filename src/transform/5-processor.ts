@@ -9,20 +9,14 @@ import { through2obj } from './utils';
 
 export default (context: string, output: IOptions['output']): Transform => {
   const makePath = (ext: string) =>
-    path.join(
-      context,
-      path.format({
-        name: output.fileName,
-        ext: `.${ext}`,
-      }),
-    );
+    path.join(context, path.format({ name: output.fileName, ext: `.${ext}` }));
   return through2obj<ISpriteExported>(async function (layout) {
     const processor = await getProcessor(output.processor);
     this.push(
       makeFile(
-        makePath(layout.sprite.type),
+        makePath(layout.sprite.format),
         layout.sprite.contents,
-        layout.sprite.type,
+        layout.sprite.format,
       ),
     );
     this.push(
@@ -31,7 +25,7 @@ export default (context: string, output: IOptions['output']): Transform => {
         await processor.handler(
           layout,
           _.merge(output.options, {
-            path: `${output.fileName}.${layout.sprite.type}`,
+            path: `${output.fileName}.${layout.sprite.format}`,
           }),
         ),
         processor.extension,

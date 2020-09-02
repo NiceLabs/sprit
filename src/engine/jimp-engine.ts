@@ -10,7 +10,7 @@ const engine: IEngine = {
       const y = tile.y + tile.offset;
       canvas.composite(soruce, x, y);
     }
-    return toBuffer(canvas);
+    return toBuffer(canvas, options.format);
   },
   async scale(tile, ratio) {
     const canvas = await Jimp.read(tile.contents);
@@ -19,13 +19,23 @@ const engine: IEngine = {
   },
 };
 
-const toBuffer = async (canvas: Jimp): Promise<IEncodedImage> => ({
-  contents: await canvas.getBufferAsync(Jimp.MIME_PNG),
+const toBuffer = async (
+  canvas: Jimp,
+  format = 'png',
+): Promise<IEncodedImage> => ({
+  contents: await canvas.getBufferAsync(getMIME(format)),
 
-  type: 'png',
+  format,
 
   width: canvas.bitmap.width,
   height: canvas.bitmap.height,
 });
+
+const getMIME = (format: string) => {
+  if (format === 'png') {
+    return Jimp.MIME_PNG;
+  }
+  return Jimp.MIME_JPEG;
+};
 
 export default engine;
