@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { Transform } from 'stream';
 import { getEngine } from '../engine';
-import { IOptions } from '../options';
-import { ITile } from '../types';
+import { Options } from '../options';
+import { Tile } from '../types';
 import { through2obj } from './utils';
 
-export default (renderer: IOptions['renderer']): Transform =>
-  through2obj<ITile, ITile>(async (tile) => {
+export default (renderer: Options['renderer']): Transform =>
+  through2obj<Tile, Tile>(async (tile) => {
     const ratio = getScale(renderer.scale, tile);
     if (ratio === 1) {
       return tile;
@@ -16,10 +16,7 @@ export default (renderer: IOptions['renderer']): Transform =>
     return _.assign(tile, _.pick(scaled, ['width', 'height', 'contents']));
   });
 
-const getScale = (
-  scale: IOptions['renderer']['scale'],
-  tile: ITile,
-): number => {
+const getScale = (scale: Options['renderer']['scale'], tile: Tile): number => {
   if (typeof scale === 'function') {
     return Math.max(scale(tile), 1);
   }

@@ -1,17 +1,17 @@
 import pack from 'bin-pack';
 import type { Bin } from 'bin-pack';
 import { Transform } from 'stream';
-import { IOptions } from '../options';
+import { Options } from '../options';
 import { through2obj } from './utils';
-import { ITile } from '../types';
+import { Tile } from '../types';
 
-export interface IBlock extends Bin {
-  item: ITile;
+export interface Block extends Bin {
+  item: Tile;
 }
 
-export default (layout: IOptions['layout']): Transform => {
-  const items: IBlock[] = [];
-  return through2obj<ITile>(
+export default (layout: Options['layout']): Transform => {
+  const items: Block[] = [];
+  return through2obj<Tile>(
     async (tile) => {
       items.push({
         width: tile.width + layout.padding + layout.margin,

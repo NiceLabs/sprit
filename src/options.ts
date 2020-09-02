@@ -1,18 +1,18 @@
 import _ from 'lodash';
 import { basename, extname } from 'path';
-import { IEngineLoader, IEngineOptions } from './engine';
-import { IProcessorLoader, IProcessorOptions } from './processor';
-import { ITile } from './types';
+import { EngineLoader, UserOptions as EngineUserOptions } from './engine';
+import { ProcessorLoader, ProcessorOptions } from './processor';
+import { Tile } from './types';
 
 export type Loader<T> = () => Promise<T | { default: T }>;
 
-export interface IOptions {
+export interface Options {
   context?: string;
   src?: string | string[];
   renderer?: {
-    engine?: IEngineLoader;
-    options?: IEngineOptions;
-    scale?: ((tile: ITile) => number) | { maximum: number };
+    engine?: EngineLoader;
+    options?: EngineUserOptions;
+    scale?: ((tile: Tile) => number) | { maximum: number };
   };
   layout?: {
     padding?: number;
@@ -20,12 +20,12 @@ export interface IOptions {
   };
   output?: {
     fileName?: string;
-    processor?: IProcessorLoader;
-    options?: IProcessorOptions;
+    processor?: ProcessorLoader;
+    options?: ProcessorOptions;
   };
 }
 
-export const defaultOptions: IOptions = {
+export const defaultOptions: Options = {
   context: process.cwd(),
   renderer: {
     engine: 'jimp',
@@ -39,7 +39,7 @@ export const defaultOptions: IOptions = {
     processor: 'json',
     fileName: 'sprite',
     options: {
-      naming({ fileName }: ITile): string {
+      naming({ fileName }: Tile): string {
         return basename(fileName, extname(fileName));
       },
     },

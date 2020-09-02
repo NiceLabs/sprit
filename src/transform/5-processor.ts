@@ -2,15 +2,15 @@ import _ from 'lodash';
 import path from 'path';
 import { Transform } from 'stream';
 import File from 'vinyl';
-import { IOptions } from '../options';
+import { Options } from '../options';
 import { getProcessor } from '../processor';
-import { ISpriteExported } from '../types';
+import { SpriteExported } from '../types';
 import { through2obj } from './utils';
 
-export default (context: string, output: IOptions['output']): Transform => {
+export default (context: string, output: Options['output']): Transform => {
   const makePath = (ext: string) =>
     path.join(context, path.format({ name: output.fileName, ext: `.${ext}` }));
-  return through2obj<ISpriteExported>(async function (layout) {
+  return through2obj<SpriteExported>(async function (layout) {
     const processor = await getProcessor(output.processor);
     this.push(
       makeFile(

@@ -2,13 +2,13 @@ import _ from 'lodash';
 import 'mocha';
 import rimraf from 'rimraf';
 import { create } from '../src';
-import { IProcessorLoader, IProcessorOptions } from '../src/processor';
+import { ProcessorLoader, ProcessorOptions } from '../src/processor';
 import { mkdtemp, SAMPLE_GLOB, test } from './utils';
 
-interface ICase {
+interface Case {
   expected: string[];
-  processor: IProcessorLoader;
-  options: IProcessorOptions;
+  processor: ProcessorLoader;
+  options: ProcessorOptions;
 }
 
 describe('create sprite test', () => {
@@ -22,7 +22,7 @@ describe('create sprite test', () => {
     rimraf.sync(context);
   });
 
-  const cases: Record<string, ICase> = {
+  const cases: Record<string, Case> = {
     'Test JSON': {
       expected: ['5Q1bg2lc80t6d1dCZV+hY4udQ5I='],
       processor: undefined,

@@ -1,7 +1,7 @@
 import { Canvas, Image } from 'canvas';
-import { IEncodedImage, IEngine } from '../types';
+import { EncodedImage, Engine } from '../types';
 
-const engine: IEngine = {
+const engine: Engine = {
   async create(tiles, options) {
     const canvas = new Canvas(options.width, options.height);
     const context = canvas.getContext('2d');
@@ -38,7 +38,7 @@ const readImage = (contents: Image['src']) =>
 const toBuffer = async (
   canvas: Canvas,
   format = 'png',
-): Promise<IEncodedImage> => {
+): Promise<EncodedImage> => {
   let contents: Buffer;
   if (format === 'png') {
     contents = canvas.toBuffer('image/png', {

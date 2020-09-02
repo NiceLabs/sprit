@@ -1,13 +1,13 @@
 import type { PackResult } from 'bin-pack';
-import { IEngineOptions } from './engine';
-import { IProcessorOptions } from './processor';
+import { Options } from './engine';
+import { ProcessorOptions } from './processor';
 
-export interface IEngine {
-  create(tiles: ITile[], options: IEngineOptions): Promise<IEncodedImage>;
-  scale(tile: ITile, ratio: number): Promise<IEncodedImage>;
+export interface Engine {
+  create(tiles: Tile[], options: Options): Promise<EncodedImage>;
+  scale(tile: Tile, ratio: number): Promise<EncodedImage>;
 }
 
-export interface ITile {
+export interface Tile {
   x?: number;
   y?: number;
   offset?: number;
@@ -23,11 +23,11 @@ export interface ITile {
   [name: string]: any;
 }
 
-export interface ISpriteExported extends PackResult<ITile> {
-  sprite: Pick<IEncodedImage, 'contents' | 'format'>;
+export interface SpriteExported extends PackResult<Tile> {
+  sprite: Pick<EncodedImage, 'contents' | 'format'>;
 }
 
-export interface IEncodedImage {
+export interface EncodedImage {
   format: string;
 
   width: number;
@@ -35,15 +35,15 @@ export interface IEncodedImage {
   contents: Buffer;
 }
 
-export interface IProcessor {
+export interface Processor {
   extension: string;
   handler(
-    layout: PackResult<ITile>,
-    options: IProcessorOptions,
+    layout: PackResult<Tile>,
+    options: ProcessorOptions,
   ): Promise<string | Buffer>;
 }
 
-export interface IProcessorExported {
+export interface ProcessorExported {
   sprite: {
     path: string;
     contents: Buffer;

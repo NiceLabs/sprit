@@ -1,19 +1,19 @@
 import _ from 'lodash';
 import { Transform } from 'stream';
 import { getEngine } from '../engine';
-import { IOptions } from '../options';
-import { ISpriteExported, ITile } from '../types';
+import { Options } from '../options';
+import { SpriteExported, Tile } from '../types';
 import { through2obj } from './utils';
 
 export default (
-  renderer: IOptions['renderer'],
-  layout: IOptions['layout'],
+  renderer: Options['renderer'],
+  layout: Options['layout'],
 ): Transform =>
-  through2obj<ISpriteExported, ISpriteExported>(async (packed) => {
+  through2obj<SpriteExported, SpriteExported>(async (packed) => {
     const engine = await getEngine(renderer.engine);
     const tiles = _.map(
       packed.items,
-      ({ x, y, item }): ITile => ({
+      ({ x, y, item }): Tile => ({
         x,
         y,
         offset: layout.padding,

@@ -1,9 +1,9 @@
 import generator from 'css-generator';
 import _ from 'lodash';
-import { IProcessor } from '../types';
+import { Processor } from '../types';
 import { getBackgroundPosition, getBackgroundSize } from '../utils';
 
-const processor: IProcessor = {
+const processor: Processor = {
   extension: 'scss',
   async handler(layout, options) {
     const prefix = options.prefix ?? 'sprite-';

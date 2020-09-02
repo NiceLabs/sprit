@@ -1,5 +1,5 @@
 import { Loader } from '../options';
-import { IEngine } from '../types';
+import { Engine } from '../types';
 import { useLoader } from '../utils';
 
 const preset = {
@@ -7,18 +7,19 @@ const preset = {
   canvas: () => import('./canvas-engine'),
 };
 
-export type IEngineLoader = Loader<IEngine> | keyof typeof preset;
+export type EngineLoader = Loader<Engine> | keyof typeof preset;
 
-export interface IEngineOptions {
+export interface Options extends UserOptions {
   width: number;
   height: number;
+}
 
+export interface UserOptions {
   format: 'png' | 'jpg';
-
   [key: string]: any;
 }
 
-export const getEngine = async (loader: IEngineLoader): Promise<IEngine> => {
+export const getEngine = async (loader: EngineLoader): Promise<Engine> => {
   if (typeof loader === 'string') {
     return useLoader(preset[loader]);
   }

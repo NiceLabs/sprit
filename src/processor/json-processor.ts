@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { IProcessor } from '../types';
+import { Processor } from '../types';
 import { getBackgroundPosition, getBackgroundSize } from '../utils';
 
-const processor: IProcessor = {
+const processor: Processor = {
   extension: 'json',
   async handler(layout, options) {
     const naming = options.naming;

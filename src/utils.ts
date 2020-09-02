@@ -1,6 +1,6 @@
 import type { PackedItem, PackResult } from 'bin-pack';
 import { Loader } from './options';
-import { ITile } from './types';
+import { Tile } from './types';
 
 export const useLoader = async <T>(loader: Loader<T>): Promise<T> => {
   const loaded: any = await loader();
@@ -8,8 +8,8 @@ export const useLoader = async <T>(loader: Loader<T>): Promise<T> => {
 };
 
 export const getBackgroundPosition = (
-  packed: PackResult<ITile>,
-  block: PackedItem<ITile>,
+  packed: PackResult<Tile>,
+  block: PackedItem<Tile>,
 ): string => {
   // see http://www.jingjingke.com/c/28134.html
   const values = [
@@ -20,8 +20,8 @@ export const getBackgroundPosition = (
 };
 
 export const getBackgroundSize = (
-  packed: PackResult<ITile>,
-  block: PackedItem<ITile>,
+  packed: PackResult<Tile>,
+  block: PackedItem<Tile>,
 ): string => {
   // see http://www.jingjingke.com/c/28134.html
   const values = [packed.width / block.width, packed.height / block.height];

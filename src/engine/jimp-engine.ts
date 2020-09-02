@@ -1,7 +1,7 @@
 import Jimp from 'jimp';
-import { IEncodedImage, IEngine } from '../types';
+import { EncodedImage, Engine } from '../types';
 
-const engine: IEngine = {
+const engine: Engine = {
   async create(tiles, options) {
     const canvas = new Jimp(options.width, options.height);
     for (const tile of tiles) {
@@ -22,7 +22,7 @@ const engine: IEngine = {
 const toBuffer = async (
   canvas: Jimp,
   format = 'png',
-): Promise<IEncodedImage> => ({
+): Promise<EncodedImage> => ({
   contents: await canvas.getBufferAsync(getMIME(format)),
 
   format,

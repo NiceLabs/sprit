@@ -1,5 +1,5 @@
 import { Loader } from '../options';
-import { IProcessor, ITile } from '../types';
+import { Processor, Tile } from '../types';
 import { useLoader } from '../utils';
 
 const preset = {
@@ -9,20 +9,20 @@ const preset = {
   json: () => import('./json-processor'),
 };
 
-export type IProcessorLoader = Loader<IProcessor> | keyof typeof preset;
+export type ProcessorLoader = Loader<Processor> | keyof typeof preset;
 
-export interface IProcessorOptions {
+export interface ProcessorOptions {
   prefix?: string;
   omitFields?: string | string[];
-  naming?(tile: ITile): string;
-  metadata?(tile: ITile): unknown;
+  naming?(tile: Tile): string;
+  metadata?(tile: Tile): unknown;
 
   [name: string]: any;
 }
 
 export const getProcessor = async (
-  loader: IProcessorLoader,
-): Promise<IProcessor> => {
+  loader: ProcessorLoader,
+): Promise<Processor> => {
   if (typeof loader === 'string') {
     return useLoader(preset[loader]);
   }
