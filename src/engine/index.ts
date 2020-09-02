@@ -16,6 +16,7 @@ export interface Options extends UserOptions {
 
 export interface UserOptions {
   format?: 'png' | 'jpg';
+  imageSmoothingEnabled?: boolean;
 }
 
 export const getEngine = async (loader: EngineLoader): Promise<Engine> => {
