@@ -15,8 +15,7 @@ export interface Options extends UserOptions {
 }
 
 export interface UserOptions {
-  format: 'png' | 'jpg';
-  [key: string]: any;
+  format?: 'png' | 'jpg';
 }
 
 export const getEngine = async (loader: EngineLoader): Promise<Engine> => {
