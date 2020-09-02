@@ -6,6 +6,7 @@ const processor: IProcessor = {
   extension: 'json',
   async handler(layout, options) {
     const naming = options.naming;
+    const metadata = options.metadata;
     const omitFields = _.map(_.castArray(options.omitFields), String);
     const data = {
       width: layout.width,
@@ -19,6 +20,7 @@ const processor: IProcessor = {
           height: block.height,
           backgroundPosition: getBackgroundPosition(layout, block),
           backgroundSize: getBackgroundSize(layout, block),
+          metadata: metadata?.(block.item),
         };
         return _.omit(fields, omitFields);
       }),

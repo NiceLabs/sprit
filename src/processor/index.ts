@@ -15,6 +15,7 @@ export interface IProcessorOptions {
   prefix?: string;
   omitFields?: string | string[];
   naming?(tile: ITile): string;
+  metadata?(tile: ITile): unknown;
 
   [name: string]: any;
 }
