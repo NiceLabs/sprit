@@ -1,6 +1,6 @@
 {
   "name": "sprit",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "a image sprite generator",
   "repository": "https://github.com/NiceLabs/sprit",
   "license": "MIT",
