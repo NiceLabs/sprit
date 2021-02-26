@@ -18,30 +18,30 @@ npm install sprit
 ### Programmatic usage
 
 ```typescript
-import * as sprit from "sprit";
+import * as sprit from 'sprit';
 
 sprit.create({
   src: [
-    "./icons/*.png", // include files
-    "!./icons/ignore-*.png" // ignore files
-  ]
+    './icons/*.png', // include files
+    '!./icons/ignore-*.png', // ignore files
+  ],
 });
 ```
 
 ### Programmatic usage with Gulp
 
 ```typescript
-const gulp = require("gulp");
-const sprit = require("sprit");
+const gulp = require('gulp');
+const sprit = require('sprit');
 
-gulp.task("sprite", () => {
+gulp.task('sprite', () => {
   const options = {
     src: [
-      "./icons/*.png", // include files
-      "!./icons/ignore-*.png" // ignore files
-    ]
+      './icons/*.png', // include files
+      '!./icons/ignore-*.png', // ignore files
+    ],
   };
-  return sprit.src(options).pipe(gulp.dest("./dist"));
+  return sprit.src(options).pipe(gulp.dest('./dist'));
 });
 ```
 
