@@ -3,13 +3,15 @@
     "target": "es2019",
     "module": "commonjs",
     "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
-    "declarationMap": true,
-    "typeRoots": ["node_modules/@types", "typings"]
+    "declarationMap": true
   },
   "include": ["src"]
 }
