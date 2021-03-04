@@ -1,4 +1,4 @@
-# sprit
+# Fuck sprit
 
 [![NPM version](https://badge.fury.io/js/sprit.svg)](http://badge.fury.io/js/sprit)
 
